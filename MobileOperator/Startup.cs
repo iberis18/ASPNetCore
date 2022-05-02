@@ -19,6 +19,7 @@ using BLL.Util;
 using Microsoft.AspNetCore.Identity;
 
 
+
 namespace MobileOperator
 {
     public class Startup
@@ -54,15 +55,14 @@ namespace MobileOperator
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory, IServiceProvider services)
         {
-
             app.UseHttpsRedirection();
-
             app.UseRouting();
             app.UseAuthentication();
-
             app.UseAuthorization();
+
+            CreateUserRoles(services).Wait();
 
             app.UseEndpoints(endpoints =>
             {
@@ -103,5 +103,56 @@ namespace MobileOperator
                 }
             });
         }
+
+        private async Task CreateUserRoles(IServiceProvider serviceProvider)
+        {
+            var roleManager =
+           serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var userManager =
+           serviceProvider.GetRequiredService<UserManager<User>>();
+            // Создание ролей администратора и пользователя
+            if (await roleManager.FindByNameAsync("admin") == null)
+            {
+                await roleManager.CreateAsync(new
+               IdentityRole("admin"));
+            }
+            if (await roleManager.FindByNameAsync("user") == null)
+            {
+                await roleManager.CreateAsync(new IdentityRole("user"));
+            }
+            // Создание Администратора
+            string adminEmail = "admin@mail.com";
+            string adminPassword = "Qwerty123!";
+            if (await userManager.FindByNameAsync(adminEmail) == null)
+            {
+                User admin = new User
+                {
+                    Email = adminEmail,
+                    UserName = adminEmail
+                };
+                IdentityResult result = await userManager.CreateAsync(admin, adminPassword);
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(admin, "admin");
+                }
+            }
+            // Создание Пользователя
+            string userNumber = "89102223344";
+            string userPassword = "Qwerty123!";
+            if (await userManager.FindByNameAsync(userNumber) == null)
+            {
+                User user = new User
+                {
+                    PhoneNumber = userNumber,
+                    UserName = userNumber
+                };
+                IdentityResult result = await userManager.CreateAsync(user, userPassword);
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(user, "user");
+                }
+            }
+        }
+
     }
 }

@@ -10,5 +10,7 @@ namespace DAL.Entity
 {
     public class User : IdentityUser
     {
+
+
     }
 }

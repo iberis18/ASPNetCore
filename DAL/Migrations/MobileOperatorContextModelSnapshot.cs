@@ -4,16 +4,14 @@ using DAL.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace MobileOperator.Migrations
+namespace DAL.Migrations
 {
     [DbContext(typeof(MobileOperatorContext))]
-    [Migration("20220502155026_initial")]
-    partial class initial
+    partial class MobileOperatorContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
