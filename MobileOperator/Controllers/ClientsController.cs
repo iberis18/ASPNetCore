@@ -9,6 +9,8 @@ using BLL.Util;
 using BLL;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+
 
 
 namespace ASPNetCoreWebAPI.Controllers
@@ -32,6 +34,7 @@ namespace ASPNetCoreWebAPI.Controllers
             //}
         }
 
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public IEnumerable<BLL.Client> GetAll()
         {
@@ -41,6 +44,7 @@ namespace ASPNetCoreWebAPI.Controllers
             
         }
 
+        [Authorize(Roles = "admin")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetClient([FromRoute] int id)
         {
@@ -60,6 +64,7 @@ namespace ASPNetCoreWebAPI.Controllers
             return Ok(client);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] BLL.Client client)
         {
@@ -75,6 +80,7 @@ namespace ASPNetCoreWebAPI.Controllers
             return CreatedAtAction("GetClient", new { id = client.Id }, client);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] BLL.Client client)
         {
@@ -87,6 +93,7 @@ namespace ASPNetCoreWebAPI.Controllers
             return NoContent();
         }
 
+        [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {

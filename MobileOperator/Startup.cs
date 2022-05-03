@@ -45,6 +45,25 @@ namespace MobileOperator
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
 
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.Name = "SimpleWebApp";
+                options.LoginPath = "/";
+                options.AccessDeniedPath = "/";
+                options.LogoutPath = "/";
+                options.Events.OnRedirectToLogin = context =>
+                {
+                    context.Response.StatusCode = 401;
+                    return Task.CompletedTask;
+                };
+                options.Events.OnRedirectToAccessDenied = context =>
+                {
+                    context.Response.StatusCode = 401;
+                return Task.CompletedTask;
+                };
+            });
+
+
             services.AddControllersWithViews();
 
             // In production, the React files will be served from this directory
