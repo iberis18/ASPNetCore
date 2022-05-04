@@ -441,8 +441,8 @@ class ClientForm extends React.Component {
     }
 }
 
-export class Home extends Component {
-  static displayName = Home.name;
+export class Clients extends Component {
+  static displayName = Clients.name;
 
   render () {
     return (

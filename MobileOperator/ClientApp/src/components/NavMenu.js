@@ -26,12 +26,15 @@ export class NavMenu extends Component {
       <header>
         <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
           <Container>
-            <NavbarBrand tag={Link} to="/home">MobileOperator</NavbarBrand>
+            <NavbarBrand tag={Link} to="/clients">MobileOperator</NavbarBrand>
             <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
             <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
               <ul className="navbar-nav flex-grow">
                 <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/home">Клиенты</NavLink>
+                  <NavLink tag={Link} className="text-dark" to="/clients">Клиенты</NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink tag={Link} className="text-dark" to="/rates">Тарифы</NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink tag={Link} className="text-dark" to="/counter">Counter</NavLink>
@@ -53,3 +56,65 @@ export class NavMenu extends Component {
     );
   }
 }
+
+//class Login extends Component {
+
+//    constructor(props) {
+//        super(props);
+
+//        this.state = {
+//        };
+
+//        this.onClick = this.onClick.bind(this);
+//    }
+
+
+//    CheckRole() {
+//        var url = "/api/Account/isAuthenticated";
+//        var xhr = new XMLHttpRequest();
+//        xhr.open("post", url, true);
+//        xhr.onload = function () {
+//            var data = JSON.parse(xhr.responseText);
+//            this.setState({ role: data.role });
+//        }.bind(this);
+//        xhr.send();
+//    }
+
+//    componentDidMount() {
+//        this.CheckRole();
+//    }
+
+//    onClick(e) {
+//        var url = "/api/Account/LogOff";
+//        var xhr = new XMLHttpRequest();
+//        xhr.open("post", url, true);
+//        xhr.onload = function () {
+//            var data = JSON.parse(xhr.responseText);
+//        }.bind(this);
+//        xhr.send();
+
+//        this.CheckRole();
+//        window.location.reload();
+
+//    }
+
+//    render() {
+//        if (this.state.role == "")
+//            return (
+//                <>
+//                <NavItem>
+//                    <NavLink tag={Link} className="text-dark" to="/login">Вход</NavLink>
+//                </NavItem>
+//                <NavItem>
+//                   <NavLink tag={Link} className="text-dark" to="/registration">Регистрация</NavLink>
+//                </NavItem>
+//                </>
+//            );
+//        else
+//            return (
+//                <NavItem>
+//                    <NavLink tag={Link} className="text-dark" to="/logOff">Выход</NavLink>
+//                </NavItem>
+//            );
+//    }
+//}
