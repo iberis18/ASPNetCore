@@ -79,10 +79,15 @@ namespace MobileOperator.Controllers
                 {
                     
                     var user = await _userManager.FindByNameAsync(model.Number);
-
+                    string role = "";
+                    if (await _userManager.IsInRoleAsync(user, "admin"))
+                        role = "admin";
+                    else
+                        role = "user";
                     var msg = new
                     {
-                        message = "Выполнен вход пользователем: " + model.Number
+                        message = "Выполнен вход пользователем: " + model.Number,
+                        role = role
                     };
                     return Ok(msg);
                 }
@@ -131,21 +136,30 @@ namespace MobileOperator.Controllers
             User usr = await GetCurrentUserAsync();
             //var number = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "sub")?.Value;
             //var user = await _userManager.FindByNameAsync(number);
+            //bool IsAuth = HttpContext.User.Identity.IsAuthenticated;
+            //var message = usr == null ? "Вы Гость. Пожалуйста, выполните вход." : "Вы вошли как: " + usr.UserName;
 
+            string role = "";
+            string message = "Вы Гость. Пожалуйста, выполните вход.";
+            if (usr != null)
+            {
+                message = "Вы вошли как: " + usr.UserName;
+                if (await _userManager.IsInRoleAsync(usr, "admin"))
+                    role = "admin";
+                else
+                    role = "user";
+            }
 
-            bool IsAuth = HttpContext.User.Identity.IsAuthenticated;
-
-            var message = usr == null ? "Вы Гость. Пожалуйста, выполните вход." : "Вы вошли как: " + usr.UserName;
             var msg = new
             {
-                message
+                message = message,
+                role = role
             };
 
             return Ok(msg);
 
         }
         private Task<User> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
-
 
     }
 }
