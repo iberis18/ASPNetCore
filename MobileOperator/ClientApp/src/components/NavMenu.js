@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import './NavMenu.css';
+import { Login } from './Login';
 
 export class NavMenu extends Component {
   static displayName = NavMenu.name;
@@ -42,12 +43,9 @@ export class NavMenu extends Component {
                 <NavItem>
                   <NavLink tag={Link} className="text-dark" to="/fetch-data">Fetch data</NavLink>
                 </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/login">Вход</NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/registration">Регистрация</NavLink>
-                </NavItem>
+
+
+                <LoginButton />
               </ul>
             </Collapse>
           </Container>
@@ -57,64 +55,64 @@ export class NavMenu extends Component {
   }
 }
 
-//class Login extends Component {
+class LoginButton extends Component {
 
-//    constructor(props) {
-//        super(props);
+    constructor(props) {
+        super(props);
 
-//        this.state = {
-//        };
+        this.state = {
+        };
 
-//        this.onClick = this.onClick.bind(this);
-//    }
+        this.onClick = this.onClick.bind(this);
+    }
 
 
-//    CheckRole() {
-//        var url = "/api/Account/isAuthenticated";
-//        var xhr = new XMLHttpRequest();
-//        xhr.open("post", url, true);
-//        xhr.onload = function () {
-//            var data = JSON.parse(xhr.responseText);
-//            this.setState({ role: data.role });
-//        }.bind(this);
-//        xhr.send();
-//    }
+    CheckRole() {
+        var url = "/api/Account/isAuthenticated";
+        var xhr = new XMLHttpRequest();
+        xhr.open("post", url, true);
+        xhr.onload = function () {
+            var data = JSON.parse(xhr.responseText);
+            this.setState({ role: data.role });
+        }.bind(this);
+        xhr.send();
+    }
 
-//    componentDidMount() {
-//        this.CheckRole();
-//    }
+    componentDidMount() {
+        this.CheckRole();
+    }
 
-//    onClick(e) {
-//        var url = "/api/Account/LogOff";
-//        var xhr = new XMLHttpRequest();
-//        xhr.open("post", url, true);
-//        xhr.onload = function () {
-//            var data = JSON.parse(xhr.responseText);
-//        }.bind(this);
-//        xhr.send();
+    onClick(e) {
+        var url = "/api/Account/LogOff";
+        var xhr = new XMLHttpRequest();
+        xhr.open("post", url, true);
+        xhr.onload = function () {
+            var data = JSON.parse(xhr.responseText);
+        }.bind(this);
+        xhr.send();
 
-//        this.CheckRole();
-//        window.location.reload();
+        //this.CheckRole();
+        window.location.reload();
 
-//    }
+    }
 
-//    render() {
-//        if (this.state.role == "")
-//            return (
-//                <>
-//                <NavItem>
-//                    <NavLink tag={Link} className="text-dark" to="/login">Вход</NavLink>
-//                </NavItem>
-//                <NavItem>
-//                   <NavLink tag={Link} className="text-dark" to="/registration">Регистрация</NavLink>
-//                </NavItem>
-//                </>
-//            );
-//        else
-//            return (
-//                <NavItem>
-//                    <NavLink tag={Link} className="text-dark" to="/logOff">Выход</NavLink>
-//                </NavItem>
-//            );
-//    }
-//}
+    render() {
+        if (this.state.role == "")
+            return (
+                <>
+                <NavItem>
+                    <NavLink tag={Link} className="text-dark" to="/login">Вход</NavLink>
+                </NavItem>
+                <NavItem>
+                   <NavLink tag={Link} className="text-dark" to="/registration">Регистрация</NavLink>
+                </NavItem>
+                </>
+            );
+        else
+            return (
+                <NavItem>
+                    <NavLink tag={Link} className="text-dark" onClick={ this.onClick }>Выход</NavLink>
+                </NavItem>
+            );
+    }
+}

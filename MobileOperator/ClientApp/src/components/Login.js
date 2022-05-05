@@ -42,7 +42,7 @@ export class Login extends Component {
                     alert(content.error);
                 else {
                     alert(content.message);
-                    /*window.location.assign('/home');*/
+                    window.location.reload();
                 }
 
             }.bind(this);
