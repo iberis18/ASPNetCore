@@ -44,17 +44,35 @@ namespace ASPNetCoreWebAPI.Controllers
             
         }
 
-        [Authorize(Roles = "admin")]
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetClient([FromRoute] int id)
+        //[Authorize(Roles = "admin")]
+        //[HttpGet("{id}")]
+        //public async Task<IActionResult> GetClient([FromRoute] int id)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    //var client = await _context.Client.SingleOrDefaultAsync(c => c.Id == id);
+        //    var client = DB.GetClient(id);
+
+        //    if (client == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return Ok(client);
+        //}
+
+        [HttpGet("{number}")]
+        public async Task<IActionResult> GetCurrentClient([FromRoute] string number)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            //var client = await _context.Client.SingleOrDefaultAsync(c => c.Id == id);
-            var client = DB.GetClient(id);
+            var client = DB.GetCurrentClient(number);
 
             if (client == null)
             {

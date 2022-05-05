@@ -27,24 +27,10 @@ export class NavMenu extends Component {
       <header>
         <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
           <Container>
-            <NavbarBrand tag={Link} to="/clients">MobileOperator</NavbarBrand>
+            <NavbarBrand tag={Link} to="/rates">MobileOperator</NavbarBrand>
             <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
             <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
               <ul className="navbar-nav flex-grow">
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/clients">Клиенты</NavLink>
-                </NavItem>
-                <NavItem>
-                    <NavLink tag={Link} className="text-dark" to="/rates">Тарифы</NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/counter">Counter</NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/fetch-data">Fetch data</NavLink>
-                </NavItem>
-
-
                 <LoginButton />
               </ul>
             </Collapse>
@@ -61,9 +47,16 @@ class LoginButton extends Component {
         super(props);
 
         this.state = {
+            role: ""
         };
 
         this.onClick = this.onClick.bind(this);
+        this.onChangeRole = this.onChangeRole.bind(this);
+
+    }
+
+    onChangeRole() {
+
     }
 
 
@@ -74,6 +67,8 @@ class LoginButton extends Component {
         xhr.onload = function () {
             var data = JSON.parse(xhr.responseText);
             this.setState({ role: data.role });
+            //this.forceUpdate();
+            //this.render();
         }.bind(this);
         xhr.send();
     }
@@ -82,7 +77,7 @@ class LoginButton extends Component {
         this.CheckRole();
     }
 
-    onClick(e) {
+    onClick() {
         var url = "/api/Account/LogOff";
         var xhr = new XMLHttpRequest();
         xhr.open("post", url, true);
@@ -90,28 +85,56 @@ class LoginButton extends Component {
             var data = JSON.parse(xhr.responseText);
         }.bind(this);
         xhr.send();
-
+        //let navigate = useNavigate();
+        //navigate("/rate", { replace: true });
         //this.CheckRole();
         window.location.reload();
+        //this.forceUpdate();
+        //this.CheckRole();
+        //this.render();
+        //this.forceUpdate();
     }
 
     render() {
+        //this.CheckRole();
         if (this.state.role == "")
             return (
                 <>
-                <NavItem>
-                    <NavLink tag={Link} className="text-dark" to="/login">Вход</NavLink>
-                </NavItem>
-                <NavItem>
-                   <NavLink tag={Link} className="text-dark" to="/registration">Регистрация</NavLink>
-                </NavItem>
+                    <NavItem>
+                        <NavLink tag={Link} className="text-dark" to="/rates">Тарифы</NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink tag={Link} className="text-dark" to="/login">Вход</NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink tag={Link} className="text-dark" to="/registration">Регистрация</NavLink>
+                    </NavItem>
                 </>
             );
         else
-            return (
-                <NavItem>
-                    <NavLink tag={Link} className="text-dark" onClick={ this.onClick }>Выход</NavLink>
-                </NavItem>
+            if (this.state.role == "user")
+                return (
+                    <>
+                        <NavItem>
+                            <NavLink tag={Link} className="text-dark" to="/rates">Тарифы</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink tag={Link} className="text-dark" onClick={this.onClick}>Выход</NavLink>
+                        </NavItem>
+                    </>
+                );
+            else return (
+                <>
+                    <NavItem>
+                        <NavLink tag={Link} className="text-dark" to="/rates">Тарифы</NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink tag={Link} className="text-dark" to="/clients">Клиенты</NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink tag={Link} className="text-dark" onClick={this.onClick}>Выход</NavLink>
+                    </NavItem>
+                </>
             );
     }
 }

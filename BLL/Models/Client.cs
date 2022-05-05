@@ -33,15 +33,18 @@ namespace BLL
         }
         public Client(DAL.Entity.Client c)
         {
-            Id = c.Id;
-            Number = c.Number;
-            Balance = c.Balance;
-            RateId = c.RateId;
-            Name = c.Name;
-            Pasport = c.Pasport;
-            MinutesRest = c.MinutesRest;
-            GBRest = c.GBRest;
-            SMSRest = c.SMSRest;
+            if (c != null)
+            {
+                Id = c.Id;
+                Number = c.Number;
+                Balance = c.Balance;
+                RateId = c.RateId;
+                Name = c.Name;
+                Pasport = c.Pasport;
+                MinutesRest = c.MinutesRest;
+                GBRest = c.GBRest;
+                SMSRest = c.SMSRest;
+            }
         }
 
     }

@@ -27,6 +27,11 @@ namespace DAL.Repository
             return db.ServiceHistory.Find(id);
         }
 
+        public ServiceHistory GetCurrentItem(string number)
+        {
+            return db.ServiceHistory.Where(c => c.Client.Number == number).FirstOrDefault();
+        }
+
         public void Create(ServiceHistory item)
         {
             db.ServiceHistory.Add(item);

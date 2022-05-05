@@ -32,6 +32,7 @@ namespace MobileOperator.Controllers
                     PhoneNumber = model.Number,
                     UserName = model.Number
                 };
+
                 // Добавление нового пользователя
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -140,6 +141,7 @@ namespace MobileOperator.Controllers
             //var message = usr == null ? "Вы Гость. Пожалуйста, выполните вход." : "Вы вошли как: " + usr.UserName;
 
             string role = "";
+            string name = "";
             string message = "Вы Гость. Пожалуйста, выполните вход.";
             if (usr != null)
             {
@@ -148,12 +150,14 @@ namespace MobileOperator.Controllers
                     role = "admin";
                 else
                     role = "user";
+                name = usr.UserName;
             }
 
             var msg = new
             {
                 message = message,
-                role = role
+                role = role,
+                name = name
             };
 
             return Ok(msg);

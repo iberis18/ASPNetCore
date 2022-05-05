@@ -26,6 +26,10 @@ namespace DAL.Repository
         {
             return db.Type.Find(id);
         }
+        public DAL.Entity.Type GetCurrentItem(string name)
+        {
+            return db.Type.Where(c => c.Name == name).FirstOrDefault();
+        }
 
         public void Create(DAL.Entity.Type item)
         {

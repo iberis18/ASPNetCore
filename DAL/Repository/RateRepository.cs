@@ -27,6 +27,11 @@ namespace DAL.Repository
             return db.Rate.Find(id);
         }
 
+        public Rate GetCurrentItem(string name)
+        {
+            return db.Rate.Where(c => c.Name == name).FirstOrDefault();
+        }
+
         public void Create(Rate item)
         {
             db.Rate.Add(item);

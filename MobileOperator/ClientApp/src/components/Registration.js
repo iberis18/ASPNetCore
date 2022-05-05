@@ -1,5 +1,6 @@
 import { Alert } from 'bootstrap';
 import React, { Component } from 'react';
+import { render } from 'react-dom';
 
 export class Registration extends Component {
     static displayName = Registration.name;
@@ -18,10 +19,6 @@ export class Registration extends Component {
         this.onPasswordConfirmChange = this.onPasswordConfirmChange.bind(this);
     }
 
-    componentDidMount() {
-        /*this.populateWeatherData();*/
-    }
-
     onNumberChange(e) {
         this.setState({ number: e.target.value });
     }
@@ -30,7 +27,44 @@ export class Registration extends Component {
     }
     onPasswordConfirmChange(e) {
         this.setState({ passwordConfirm: e.target.value });
-    }   
+    }
+
+    Registr() {
+        var url = "/api/Account/Register";
+        var xhr = new XMLHttpRequest();
+        xhr.open("post", url);
+        xhr.setRequestHeader("Content-Type", "application/json;");
+        xhr.responseType = 'json';
+        xhr.onload = function () {
+            let content = xhr.response;
+            if (content.error)
+                alert(content.error);
+            else {
+                this.setState({ number: "", password: "", passwordConfirm: "" })
+                alert(content.message);
+                window.location.reload();
+            }
+        }.bind(this);
+        xhr.send(JSON.stringify({ number: this.state.number.trim(), password: this.state.password.trim(), passwordConfirm: this.state.passwordConfirm.trim() }));
+    }
+
+    CheckClient() {
+        var url = "/api/Clients/" + this.state.number.trim();
+        var xhr = new XMLHttpRequest();
+        xhr.open("get", url);
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                var data = JSON.parse(xhr.responseText);
+                if (data.id != 0)
+                    this.Registr();
+                else
+                    alert("Неверный номер телефона! Данный номер не является клиентом нашего оператора");
+            }
+        }.bind(this);
+        xhr.send();
+    }
+
+
 
     // добавление объекта
     onSubmit(e) {
@@ -40,22 +74,7 @@ export class Registration extends Component {
         var clientPasswordConfirm = this.state.passwordConfirm.trim();
 
         if (clientNumber && clientPassword && clientPasswordConfirm) {
-            var url = "/api/Account/Register";
-            var xhr = new XMLHttpRequest();
-            xhr.open("post", url);
-            xhr.setRequestHeader("Content-Type", "application/json;");
-            xhr.responseType = 'json';
-            xhr.onload = function () {
-                let content = xhr.response;
-                if (content.error)
-                    alert(content.error);
-                else {
-                    this.setState({ number: "", password: "", passwordConfirm: ""})
-                    alert(content.message);
-                }
-
-            }.bind(this);
-            xhr.send(JSON.stringify({ number: clientNumber, password: clientPassword, passwordConfirm: clientPasswordConfirm }));
+            this.CheckClient();          
         }
         else
             alert("Заполните все поля!");

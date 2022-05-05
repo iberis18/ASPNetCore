@@ -10,6 +10,7 @@ namespace BLL.Interfaces
     {
         List<Client> GetAllClients();
         Client GetClient(int ClientId);
+        Client GetCurrentClient(string ClientNumber);
         void CreateClient(Client c);
         void UpdateClient(Client c, int id);
         void DeleteClient(int id);

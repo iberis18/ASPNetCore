@@ -27,6 +27,11 @@ namespace DAL.Repository
             return db.Service.Find(id);
         }
 
+        public Service GetCurrentItem(string name)
+        {
+            return db.Service.Where(c => c.Name == name).FirstOrDefault();
+        }
+
         public void Create(Service item)
         {
             db.Service.Add(item);

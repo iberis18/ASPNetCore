@@ -27,6 +27,11 @@ namespace DAL.Repository
             return db.SMS.Find(id);
         }
 
+        public SMS GetCurrentItem(string number)
+        {
+            return db.SMS.Where(c => c.Client.Number == number).FirstOrDefault();
+        }
+
         public void Create(SMS item)
         {
             db.SMS.Add(item);

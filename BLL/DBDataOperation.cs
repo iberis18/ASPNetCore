@@ -23,6 +23,11 @@ namespace BLL
         {
             return new Client(db.Clients.GetItem(Id));
         }
+        public Client GetCurrentClient(string number)
+        {
+            Client c = new Client(db.Clients.GetCurrentItem(number));
+            return c;
+        }
         public void DeleteClient(int id)
         {
             if (db.Clients.GetItem(id) != null)

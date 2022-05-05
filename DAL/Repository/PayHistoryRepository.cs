@@ -26,6 +26,10 @@ namespace DAL.Repository
         {
             return db.PayHistory.Find(id);
         }
+        public PayHistory GetCurrentItem(string number)
+        {
+            return db.PayHistory.Where(c => c.Client.Number == number).FirstOrDefault();
+        }
 
         public void Create(PayHistory item)
         {

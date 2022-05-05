@@ -125,15 +125,12 @@ namespace MobileOperator
 
         private async Task CreateUserRoles(IServiceProvider serviceProvider)
         {
-            var roleManager =
-           serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var userManager =
-           serviceProvider.GetRequiredService<UserManager<User>>();
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
             // Создание ролей администратора и пользователя
             if (await roleManager.FindByNameAsync("admin") == null)
             {
-                await roleManager.CreateAsync(new
-               IdentityRole("admin"));
+                await roleManager.CreateAsync(new IdentityRole("admin"));
             }
             if (await roleManager.FindByNameAsync("user") == null)
             {

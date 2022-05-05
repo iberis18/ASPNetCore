@@ -30,6 +30,11 @@ namespace DAL.Repository
         {
             return db.Client.Find(id);
         }
+        public Client GetCurrentItem(string number)
+        {
+            Client client = db.Client.Where(c => c.Number == number).FirstOrDefault();
+            return client;
+        }
 
         public void Create(Client item)
         {

@@ -27,6 +27,10 @@ namespace DAL.Repository
         {
             return db.Call.Find(id);
         }
+        public Call GetCurrentItem(string number)
+        {
+            return db.Call.Where(c => c.Client.Number == number).FirstOrDefault();
+        }
 
         public void Create(Call item)
         {

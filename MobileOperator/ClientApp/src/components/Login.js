@@ -1,6 +1,7 @@
 import { Alert } from 'bootstrap';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { NavMenu } from './NavMenu';
 
 export class Login extends Component {
     static displayName = Login.name;
@@ -42,6 +43,8 @@ export class Login extends Component {
                     alert(content.error);
                 else {
                     alert(content.message);
+                    this.NavMenu.render();
+                    //this.forceUpdate();
                     window.location.reload();
                 }
 
