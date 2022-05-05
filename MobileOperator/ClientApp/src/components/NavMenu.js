@@ -93,7 +93,6 @@ class LoginButton extends Component {
 
         //this.CheckRole();
         window.location.reload();
-
     }
 
     render() {
