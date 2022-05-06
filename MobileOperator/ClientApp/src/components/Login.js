@@ -43,7 +43,7 @@ export class Login extends Component {
                     alert(content.error);
                 else {
                     alert(content.message);
-                    this.NavMenu.render();
+                    //this.NavMenu.render();
                     //this.forceUpdate();
                     window.location.reload();
                 }

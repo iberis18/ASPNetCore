@@ -7,7 +7,9 @@ import { FetchData } from './components/FetchData';
 import { Counter } from './components/Counter';
 import { Registration } from './components/Registration';
 import { Login } from './components/Login';
-import { Rates } from './components/Rates'
+import { Rates } from './components/Rates';
+import { PersonalArea } from './components/PersonalArea'
+
 
 import './custom.css'
 
@@ -23,6 +25,7 @@ export default class App extends Component {
             <Route path='/fetch-data' component={FetchData} />
             <Route path='/login' component={Login} />
             <Route path='/registration' component={Registration} />
+            <Route path='/personalArea' component={PersonalArea} />
             <Redirect from='/' to='/rates' />
       </Layout>
     );

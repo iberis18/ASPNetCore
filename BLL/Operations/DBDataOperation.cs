@@ -65,14 +65,20 @@ namespace BLL
             cl.GBRest = c.GBRest;
             db.Clients.Update(cl);
             Save();
-        }
-
-
+        } 
 
         ///////////тариф
         public List<Rate> GetAllRates()
         {
-            return db.Rates.GetList().Select(i => new Rate(i)).ToList();
+            List<Rate> list = new List<Rate>();
+            List<Rate> listBuf = new List<Rate>();
+            listBuf = db.Rates.GetList().Select(i => new Rate(i)).ToList();
+            foreach (Rate r in listBuf)
+            {
+                if (r.Status == true)
+                    list.Add(r);
+            }
+            return list;
         }
         public Rate GetRate(int Id)
         {

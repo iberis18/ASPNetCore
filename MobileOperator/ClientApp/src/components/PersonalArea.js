@@ -1,25 +1,33 @@
 ﻿import React, { Component } from 'react';
-import { useNavigate, NavLink } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
+
+const ChangeRate = () => {
+    let history = useHistory();
+
+    const goToRates = () => {
+        history.push("/rates");
+    };
+    return (
+        <button className='btn btn-outline-primary' onClick={goToRates}>Сменить тариф</button>
+    );
+};
+//export default About;
 
 export class PersonalArea extends Component {
     static displayName = PersonalArea.name;
 
     constructor(props) {
         super(props);
-        this.state = { number: "", role: "", client, clientsRate: "" };
+        this.state = {
+            number: "",
+            role: "",
+            client: [],
+            clientsRate: []
+        };
     }
-
 
     componentDidMount() {
         this.CheckRole();
-        //let navigate = useNavigate();
-        if (this.state.role === "")
-            useNavigate("/rate", { replace: true });
-        else
-            if (this.state.role === "user") {
-                GetUser();
-                GetRate();
-            }
     }
 
     CheckRole() {
@@ -29,17 +37,19 @@ export class PersonalArea extends Component {
         xhr.onload = function () {
             var data = JSON.parse(xhr.responseText);
             this.setState({ role: data.role, number: data.name });
+            this.GetUser();
         }.bind(this);
         xhr.send();
     }
 
     GetUser() {
-        var url = "/api/Clients/" + this.state.name;
+        var url = "/api/Clients/" + this.state.number;
         var xhr = new XMLHttpRequest();
         xhr.open("get", url, true);
         xhr.onload = function () {
             var data = JSON.parse(xhr.responseText);
             this.setState({ client: data });
+            this.GetRate();
         }.bind(this);
         xhr.send();
     }
@@ -55,36 +65,42 @@ export class PersonalArea extends Component {
         xhr.send();
     }
 
-
-
     render() {
         return (
             <div>
-                <h2>Личный кабинет</h2>
-                <h4>Информация</h4>
+                <h4>
+                    <strong> Ваш баланс:</strong> {this.state.client.balance}
+                </h4>
+                <hr/>
+                <h4>Личные данные</h4>
+                <br/>
                 <p>
-                    ФИО: {this.state.client.name}
+                    <strong>ФИО:</strong> {this.state.client.name}
                 </p>
                 <p>
-                    Номер телефона: {this.state.client.number}
+                    <strong>Номер телефона:</strong> {this.state.client.number}
                 </p>
                 <p>
-                    Серия и номер паспорта: {this.state.client.pasport}
+                    <strong>Серия и номер паспорта:</strong> {this.state.client.pasport}
                 </p>
                 <hr />
 
-                <h4>Тарифный план: {this.state.clientsRate.name}</h4>
+                <h4>Тарифный план:</h4>
+                <br />
                 <p>
-                    Остаток минут: <strong>{this.state.client.minutesRest}</strong>/{this.state.clientsRate.minutes}
+                    <strong>{this.state.clientsRate.name}</strong>
                 </p>
                 <p>
-                    Остаток СМС: <strong>{this.state.client.smsRest}</strong>/{this.state.clientsRate.sms}
+                    <strong> Остаток минут:</strong> {this.state.client.minutesRest} из {this.state.clientsRate.minutes}
                 </p>
                 <p>
-                    Остаток ГБ: <strong>{this.state.client.gbRest}</strong>/{this.state.clientsRate.gb}
+                    <strong>Остаток СМС:</strong> {this.state.client.smsRest} из {this.state.clientsRate.sms}
                 </p>
-                <button className='btn btn-outline-primary' {/*onClick={this.ChangeRate}*/}>Сменить тариф</button>
-                
+                <p>
+                    <strong>Остаток ГБ: </strong>{this.state.client.gbRest} из {this.state.clientsRate.gb}
+                </p>
+
+                <ChangeRate />              
             </div>
         );
     }

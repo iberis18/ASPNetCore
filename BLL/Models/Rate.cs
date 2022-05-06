@@ -31,19 +31,22 @@ namespace BLL
         }
         public Rate(DAL.Entity.Rate r)
         {
-            Id = r.Id;
-            Status = r.Status;
-            Name = r.Name;
-            CityCost = r.CityCost;
-            IntercityCost = r.IntercityCost;
-            InternationalCost = r.InternationalCost;
-            GB = r.GB;
-            SMS = r.SMS;
-            Minutes = r.Minutes;
-            GBCost = r.GBCost;
-            MinuteCost = r.MinuteCost;
-            SMSCost = r.SMSCost;
-            Cost = r.Cost;
+            if (r != null)
+            {
+                Id = r.Id;
+                Status = r.Status;
+                Name = r.Name;
+                CityCost = r.CityCost;
+                IntercityCost = r.IntercityCost;
+                InternationalCost = r.InternationalCost;
+                GB = r.GB;
+                SMS = r.SMS;
+                Minutes = r.Minutes;
+                GBCost = r.GBCost;
+                MinuteCost = r.MinuteCost;
+                SMSCost = r.SMSCost;
+                Cost = r.Cost;
+            }
         }
     }
 }

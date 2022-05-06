@@ -264,8 +264,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Models\ChangeRateViewModel.cs" />
     <Compile Include="Models\Client.cs" />
-    <Compile Include="DBDataOperation.cs" />
+    <Compile Include="Operations\ChangeRateOperation.cs" />
+    <Compile Include="Operations\DBDataOperation.cs" />
     <Compile Include="Interfaces\IDbCrud.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\Rate.cs" />

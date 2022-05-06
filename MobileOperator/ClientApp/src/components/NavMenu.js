@@ -56,7 +56,8 @@ class LoginButton extends Component {
     }
 
     onChangeRole() {
-
+        this.CheckRole();
+        this.render();
     }
 
 
@@ -67,8 +68,6 @@ class LoginButton extends Component {
         xhr.onload = function () {
             var data = JSON.parse(xhr.responseText);
             this.setState({ role: data.role });
-            //this.forceUpdate();
-            //this.render();
         }.bind(this);
         xhr.send();
     }
@@ -85,18 +84,10 @@ class LoginButton extends Component {
             var data = JSON.parse(xhr.responseText);
         }.bind(this);
         xhr.send();
-        //let navigate = useNavigate();
-        //navigate("/rate", { replace: true });
-        //this.CheckRole();
         window.location.reload();
-        //this.forceUpdate();
-        //this.CheckRole();
-        //this.render();
-        //this.forceUpdate();
     }
 
     render() {
-        //this.CheckRole();
         if (this.state.role == "")
             return (
                 <>
@@ -117,6 +108,9 @@ class LoginButton extends Component {
                     <>
                         <NavItem>
                             <NavLink tag={Link} className="text-dark" to="/rates">Тарифы</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink tag={Link} className="text-dark" to="/personalArea">Личный кабинет</NavLink>
                         </NavItem>
                         <NavItem>
                             <NavLink tag={Link} className="text-dark" onClick={this.onClick}>Выход</NavLink>

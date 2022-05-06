@@ -10,7 +10,8 @@ using BLL;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
-
+using BLL.Operations;
+using BLL.Models;
 
 
 namespace ASPNetCoreWebAPI.Controllers
@@ -20,9 +21,12 @@ namespace ASPNetCoreWebAPI.Controllers
     public class ClientsController : ControllerBase
     {
         DBDataOperation DB;
+        DBRepository repos;
         public ClientsController(MobileOperatorContext context)
         {
-            DB = new DBDataOperation(new DBRepository(context));
+            repos = new DBRepository(context);
+            DB = new DBDataOperation(repos);
+
             //db = new DAL.Repository.DBRepository();
 
             //DBDataOperation db = new DBDataOperation();
@@ -110,6 +114,33 @@ namespace ASPNetCoreWebAPI.Controllers
 
             return NoContent();
         }
+
+
+        //[Authorize(Roles = "user")]
+        //// GET api/clients/rateId/clientId
+        //[HttpGet]
+        //[Route("{rateId:int}/{clientId:int}")]
+        ////[HttpGet("{rateId}/{clientId}")]
+        //public async Task<IActionResult> ChangeRate([FromRoute] int rateId, [FromBody] int clientId)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+        //    ChangeRateOperation changeRate = new ChangeRateOperation(repos);
+
+
+        //    string error = changeRate.ChangeRate(clientId, rateId);
+        //    if (error == "")
+        //        return NoContent();
+        //    else
+        //    {
+        //        var msg = new { message = error };
+        //        return Ok(msg);
+        //    }
+
+        //}
+
 
         [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]

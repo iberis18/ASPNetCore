@@ -9,6 +9,7 @@ using BLL.Util;
 using BLL;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using BLL.Operations;
 
 
 namespace ASPNetCoreWebAPI.Controllers
@@ -62,17 +63,18 @@ namespace ASPNetCoreWebAPI.Controllers
         //    return CreatedAtAction("GetClient", new { id = client.Id }, client);
         //}
 
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> Update([FromRoute] int id, [FromBody] BLL.Client client)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-        //    DB.UpdateClient(client, id);
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] BLL.Rate rate)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            DB.UpdateRate(rate, id);
 
-        //    return NoContent();
-        //}
+            return NoContent();
+        }
+
 
         //[HttpDelete("{id}")]
         //public async Task<IActionResult> Delete([FromRoute] int id)
