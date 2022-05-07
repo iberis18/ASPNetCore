@@ -2,6 +2,7 @@
 import { useHistory } from "react-router-dom";
 import './custom.css'
 
+
 const ChangeRate = () => {
     let history = useHistory();
 
@@ -9,8 +10,9 @@ const ChangeRate = () => {
         history.push("/rates");
     };
     return (
-        <div className="text-center">
-            <button className='btn btn-outline-primary' onClick={goToRates}>Сменить тариф</button>
+        <div className="text-center row-mt-5">
+
+            <button className='col-12 btn btn-info' onClick={goToRates}>Сменить тариф</button>
             </div>
     );
 };
@@ -25,12 +27,19 @@ export class PersonalArea extends Component {
             number: "",
             role: "",
             client: [],
-            clientsRate: []
+            clientsRate: [],
+            sum: ""
         };
+        this.Pay = this.Pay.bind(this);
+        this.onSumChange = this.onSumChange.bind(this);
     }
 
     componentDidMount() {
         this.CheckRole();
+    }
+
+    onSumChange(e) {
+        this.setState({ sum: e.target.value })
     }
 
     CheckRole() {
@@ -68,6 +77,27 @@ export class PersonalArea extends Component {
         xhr.send();
     }
 
+    Pay() {
+        if (this.state.sum > 0) {
+            var url = "/api/BL/PayBalance";
+            var xhr = new XMLHttpRequest();
+            xhr.open("post", url);
+            xhr.setRequestHeader("Content-Type", "application/json;");
+            xhr.onload = function () {
+                if (xhr.responseText !== "") {
+                    var data = JSON.parse(xhr.responseText);
+                    alert(data.message);
+                }
+                else {
+                    alert("Баланс успешно поплнен!")
+                    this.GetUser();
+                }
+            }.bind(this);
+            xhr.send(JSON.stringify({ ClientId: this.state.client.id, Sum: this.state.sum }));
+        }
+        else alert("Введите сумму платежа больше 0");
+    }
+
     render() {
         return (
             <div>
@@ -78,22 +108,53 @@ export class PersonalArea extends Component {
                         <br />
 
                         <div>
-                            <h5 className="formPadd shadow-lg bg-white text-center">
-                                <div className="row mt-2">
-                                    <div className="col-4">
-                                        Ваш баланс: <strong>{this.state.client.balance} руб.</strong>
-                                    </div> 
-                                    <div className="col-4">
-                                        Ваш тариф: {this.state.clientsRate.name} 
+                            <div className="row mt-2">
+                                <h5 className="formPaddSm col-6 shadow-lg bg-white text-center">
+                                    <div className="row mt-2">
+                                        <div className="col-6">
+                                            Ваш баланс: 
+                                        </div> 
+                                        <div className="col-6">
+                                            Ваш тариф: 
+                                        </div>
                                     </div>
-                                    <div className="col-1">
+                                    <div className="row mt-2">
+                                        <div className="col-6">
+                                            <strong>{this.state.client.balance} руб.</strong>
+                                        </div>
+                                        <div className="col-6">
+                                            {this.state.clientsRate.name}
+                                        </div>
                                     </div>
-                                    <div className="col-3">
-                                        <ChangeRate />
+                                    <div className="row mt-5">
+                                        <div className=" col-1"></div>
+                                        <div className="col-10">
+                                            <ChangeRate />
+                                        </div>
+                                        <div className=" col-1"></div>
+                                    </div>
+                                </h5>
+
+                                <div className="col-1" ></div>
+
+                                <div className="formPaddSm shadow-lg bg-white col-5 text-center">
+                                    <div className="row mt-2">
+                                        <h5 className=" col-12">Пополнить баланс</h5>
+                                        <label className="control-label col-6">Введите сумму пополнения:</label>
+                                        <input type="number"
+                                            className="form-control col-5"
+                                            placeholder="500"
+                                            value={this.state.sum}
+                                            onChange={this.onSumChange} />
+                                    </div>
+                                    <div className="row mt-3">
+                                        <div className=" col-1"></div>
+                                        <button className="col-10 btn btn-info" onClick={() => this.Pay()}>Оплатить</button>
+                                        <div className=" col-1"></div>
                                     </div>
                                 </div>
-                            </h5>
 
+                            </div>
                             <br />
                             <br />
 

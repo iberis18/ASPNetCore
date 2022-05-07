@@ -17,6 +17,7 @@ using System.Text.Json;
 using Newtonsoft.Json;
 using BLL.Util;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.OpenApi.Models;
 
 
 
@@ -45,6 +46,15 @@ namespace MobileOperator
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
 
+            // In production, the React files will be served from this directory
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "ClientApp/build";
+            });
+
+            services.AddControllersWithViews();
+
+
             services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.Name = "SimpleWebApp";
@@ -64,12 +74,15 @@ namespace MobileOperator
             });
 
 
-            services.AddControllersWithViews();
 
-            // In production, the React files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
+            services.AddSwaggerGen(c =>
             {
-                configuration.RootPath = "ClientApp/build";
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "MobileOperatorApi",
+                    Version = "v1",
+                    Description = "Description for the API goes here."
+                });
             });
         }
 
@@ -80,6 +93,7 @@ namespace MobileOperator
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+
 
             CreateUserRoles(services).Wait();
 
@@ -120,6 +134,20 @@ namespace MobileOperator
                 {
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
+            });
+
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "MobileOperator API V1");
+
+                // To serve SwaggerUI at application's root page, set the RoutePrefix property to an empty string.
+                c.RoutePrefix = string.Empty;
             });
         }
 

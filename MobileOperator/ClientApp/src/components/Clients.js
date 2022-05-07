@@ -167,8 +167,8 @@ class Client extends Component {
                         <div className="row mt-2" >
                             <div className="col-sm-4"></div>
                         <div className="btn-group" role="group" >
-                                <input className='btn btn-outline-primary' type="submit" value="Изменить" />
-                                <button className='btn btn-outline-primary' onClick={this.onClick}>Удалить</button>
+                            <input className='btn btn-outline-info' type="submit" value="Изменить" />
+                            <button className='btn btn-outline-danger' onClick={this.onClick}>Удалить</button>
                             </div>
                         </div>
                     </div>
@@ -446,7 +446,7 @@ class ClientForm extends React.Component {
                         <br/>
                         <div className="row mt-2">
                             <div className="col-sm-3"></div>
-                            <input className="btn btn-primary col-sm-6" type="submit" value="Добавить" />
+                            <input className="btn btn-info col-sm-6" type="submit" value="Добавить" />
                             <div className="col-sm-3"></div>
                         </div>
                     </div>

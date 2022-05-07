@@ -20,6 +20,14 @@ code {
 .formPadd {
     padding: 50px;
 }
+
+.formPaddSm {
+    padding: 30px;
+}
+.formMar{
+    margin-left: 10px;
+    margin-right: 10px;
+}
 .shadowForm {
     margin-top: 30px;
     margin-bottom: 50px;

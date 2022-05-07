@@ -14,7 +14,7 @@ const LoginPage = () => {
         history.push("/Login");
     };
     return (
-        <button className="btn btn-outline-primary" onClick={goToLogin}>Войти в систему</button>
+        <button className="btn btn-outline-info" onClick={goToLogin}>Войти в систему</button>
     );
 };
 
@@ -136,7 +136,7 @@ export class Registration extends Component {
                                 <div className="row mt-2">
                                     <div className="cal-3"><LoginPage /></div>
                                     <div className="col-5"/>
-                                    <input className="col-4 btn btn-primary" type="submit" value="Зарегестрироваться" />
+                                    <input className="col-4 btn btn-info" type="submit" value="Зарегестрироваться" />
                                 </div>
                             </div>
 

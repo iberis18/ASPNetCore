@@ -47,6 +47,23 @@ namespace BLL.Operations
 
             return message;
         }
+
+        public string PayBalance(double sum, int clientId)
+        {
+            Client client = new Client(db.Clients.GetItem(clientId));
+            
+            string message = "";
+            if (client != null)
+            {
+                DAL.Entity.Client cl = db.Clients.GetItem(clientId);
+                cl.Balance += sum;
+                db.Clients.Update(cl);
+                Save();
+            }
+            else message = "Данный клиент не найден";
+
+            return message;
+        }
         public bool Save()
         {
             return db.Save();

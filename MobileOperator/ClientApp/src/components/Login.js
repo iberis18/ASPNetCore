@@ -81,7 +81,7 @@ export class Login extends Component {
                         </div>
                         <br/>
                         <div className="row mt-2">
-                            <input className="btn btn-primary col-12" type="submit" value="Войти" />
+                            <input className="btn btn-info col-12" type="submit" value="Войти" />
                         </div>
                     </form>
                 </div>

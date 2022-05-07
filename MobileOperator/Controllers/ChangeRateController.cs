@@ -16,7 +16,8 @@ using BLL.Models;
 
 namespace ASPNetCoreWebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    //[Route("api/[controller]")]
+    [Produces("application/json")]
     [ApiController]
     public class ChangeRateController : ControllerBase
     {
@@ -38,7 +39,9 @@ namespace ASPNetCoreWebAPI.Controllers
             //}
         }
 
+
         [HttpPost]
+        [Route("api/BL/ChangeRate")]
         public async Task<IActionResult> ChangeRate([FromBody] ChangeRateViewModel model)
         {
             if (!ModelState.IsValid)
@@ -49,6 +52,27 @@ namespace ASPNetCoreWebAPI.Controllers
 
 
             string error = changeRate.ChangeRate(model.ClientId, model.RateId);
+            if (error == "")
+                return NoContent();
+            else
+            {
+                var msg = new { message = error };
+                return Ok(msg);
+            }
+        }
+
+        [HttpPost]
+        [Route("api/BL/PayBalance")]
+        public async Task<IActionResult> Pay([FromBody] PayBalanceViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            ChangeRateOperation changeRate = new ChangeRateOperation(repos);
+
+
+            string error = changeRate.PayBalance(model.Sum, model.ClientId);
             if (error == "")
                 return NoContent();
             else

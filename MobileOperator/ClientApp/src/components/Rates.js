@@ -184,7 +184,7 @@ class Rate extends Component {
     }
 
     ChangeRate() {
-        var url = "/api/ChangeRate";
+        var url = "/api/BL/ChangeRate";
         var xhr = new XMLHttpRequest();
         xhr.open("post", url, true);
         xhr.setRequestHeader("Content-Type", "application/json;");
@@ -425,8 +425,8 @@ class Rate extends Component {
                     <div className="row mt-2">
                         <div className="col-sm-4"></div>
                         <div className="btn-group" role="group">
-                            <button type="button" class="btn btn-outline-primary" onClick={() => this.EditRate()}>Сохранить изменения</button>
-                            <button type="button" class="btn btn-outline-primary" onClick={() => this.TurnOffRate()}>Архивировать тариф</button>
+                            <button type="button" class="btn btn-outline-info" onClick={() => this.EditRate()}>Сохранить изменения</button>
+                            <button type="button" class="btn btn-outline-danger" onClick={() => this.TurnOffRate()}>Архивировать тариф</button>
                         </div>
                     </div>
                     <hr />
@@ -449,11 +449,11 @@ class CurrentButton extends Component {
     render() {
         if (this.state.rateId == this.state.clientsRate)
             return (
-                <button type="button" class="btn btn-primary" disabled>Тариф подключен</button>
+                <button type="button" class="btn btn-info" disabled>Тариф подключен</button>
             );
         else
             return (
-                <button type="button" class="btn btn-outline-primary" onClick={() => this.props.ChangeRate()}>Подключить тариф</button>
+                <button type="button" class="btn btn-outline-info" onClick={() => this.props.ChangeRate()}>Подключить тариф</button>
             );
     }
 }
@@ -635,7 +635,7 @@ class AddRate extends Component {
                         <br/>
                         <div className="row mt-2">
                             <div className="col-sm-3"></div>
-                            <button type="button" class="btn btn-primary col-sm-6" onClick={() => this.CreateRate()}>Создать тариф</button>
+                            <button type="button" class="btn btn-info col-sm-6" onClick={() => this.CreateRate()}>Создать тариф</button>
                             <div className="col-sm-3"></div>
                         </div>
                     </div >
