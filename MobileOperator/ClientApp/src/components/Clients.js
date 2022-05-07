@@ -95,78 +95,85 @@ class Client extends Component {
     }
     render() {
         return <div>
+            <br/>
             <form onSubmit={this.onSubmit}>
-                <p>
-                    <label className="control-label col-4">ФИО:</label>
-                    <input type="text"
-                        className="form-control col-4"
-                        placeholder="Клиент"
-                        value={this.state.name}
-                        onChange={this.onNameChange} />
-                </p>
-                <p>
-                    <label className="control-label col-4">Баланс (руб.):</label>
-                    <input type="number"
-                        className="form-control col-4"
-                        placeholder="Баланс (руб.)"
-                        value={this.state.balance}
-                        onChange={this.onBalanceChange} />
-                </p>
-                <p>
-                    <label className="control-label col-4">Номер телефона:</label>
-                    <input type="text"
-                        className="form-control col-4"
-                        placeholder="Номер телефона"
-                        value={this.state.number}
-                        onChange={this.onNumberChange} />
-                </p>
-                <p>
-                    <label className="control-label col-4">Тариф:</label>
-                    <select className="form-control col-4" placeholder="Выберете тариф"
-                        value={this.state.rateId}
-                        onChange={this.onRateIdChange}>
-                        {this.state.rates.map(d => (<option value={d.id}>{d.name}</option>))}
-                    </select>
-                </p>
-                <p>
-                    <label className="control-label col-4">Паспортные данные:</label>
-                    <input type="text"
-                        className="form-control col-4"
-                        placeholder="Паспортные данные"
-                        value={this.state.pasport}
-                        onChange={this.onPasportChange} />
-                </p>
-                <p>
-                    <label className="control-label col-4">Остаток пакета минут:</label>
-                    <input type="number"
-                        className="form-control col-4"
-                        placeholder="Остаток пакета минут:"
-                        value={this.state.minutesRest}
-                        onChange={this.onMinutesRestChange} />
-                </p>
-                <p>
-                    <label className="control-label col-4">Остаток пакета ГБ:</label>
-                    <input type="number"
-                        className="form-control col-4"
-                        placeholder="Остаток пакета ГБ"
-                        value={this.state.gbRest}
-                        onChange={this.onGBRestChange} />
-                </p>
-                <p>
-                    <label className="control-label col-4">Остаток пакета СМС:</label>
-                    <input type="text"
-                        className="form-control col-4"
-                        placeholder="Остаток пакета СМС"
-                        value={this.state.smsRest}
-                        onChange={this.onSMSRestChange} />
-                </p>
-
-                <div className="btn-group" role="group">
-                    <input className='btn btn-outline-primary' type="submit" value="Изменить" />
-                    <button className='btn btn-outline-primary' onClick={this.onClick}>Удалить</button>
-                </div>
-                <hr></hr>
+                    <div>
+                        <div className="row mt-2">
+                            <label className="control-label col-4">ФИО:</label>
+                            <input type="text"
+                                className="form-control col-5"
+                                placeholder="Клиент"
+                                value={this.state.name}
+                                onChange={this.onNameChange} />
+                        </div>
+                        <div className="row mt-2">
+                            <label className="control-label col-4">Баланс:</label>
+                            <input type="number"
+                                className="form-control col-5"
+                                placeholder="Баланс (руб.)"
+                                value={this.state.balance}
+                                onChange={this.onBalanceChange} />
+                        </div>
+                        <div className="row mt-2">
+                            <label className="control-label col-4">Номер телефона:</label>
+                            <input type="text"
+                                className="form-control col-5"
+                                placeholder="Номер телефона"
+                                value={this.state.number}
+                                onChange={this.onNumberChange} />
+                        </div>
+                        <div className="row mt-2">
+                            <label className="control-label col-4">Тариф:</label>
+                            <select className="form-control col-5"
+                                placeholder="Выберете тариф"
+                                value={this.state.rateId}
+                                onChange={this.onRateIdChange}>
+                                <option value={0}>Выберите тариф</option>
+                                {this.state.rates.map(d => (<option value={d.id}>{d.name}</option>))}
+                            </select>
+                        </div>
+                        <div className="row mt-2">
+                            <label className="control-label col-4">Паспортные данные:</label>
+                            <input type="text"
+                                className="form-control col-5"
+                                placeholder="Паспортные данные"
+                                value={this.state.pasport}
+                                onChange={this.onPasportChange} />
+                        </div>
+                        <div className="row mt-2">
+                            <label className="control-label col-4">Остаток пакета минут:</label>
+                            <input type="number"
+                                className="form-control col-5"
+                                placeholder="Остаток пакета минут:"
+                                value={this.state.minutesRest}
+                                onChange={this.onMinutesRestChange} />
+                        </div>
+                        <div className="row mt-2">
+                            <label className="control-label col-4">Остаток пакета ГБ:</label>
+                            <input type="number"
+                                className="form-control col-5"
+                                placeholder="Остаток пакета ГБ"
+                                value={this.state.gbRest}
+                                onChange={this.onGBRestChange} />
+                        </div>
+                        <div className="row mt-2">
+                            <label className="control-label col-4">Остаток пакета СМС:</label>
+                            <input type="text"
+                                className="form-control col-5"
+                                placeholder="Остаток пакета СМС"
+                                value={this.state.smsRest}
+                                onChange={this.onSMSRestChange} />
+                        </div>
+                        <div className="row mt-2" >
+                            <div className="col-sm-4"></div>
+                        <div className="btn-group" role="group" >
+                                <input className='btn btn-outline-primary' type="submit" value="Изменить" />
+                                <button className='btn btn-outline-primary' onClick={this.onClick}>Удалить</button>
+                            </div>
+                        </div>
+                    </div>
             </form>
+            <hr/>
         </div>;
     }
 }
@@ -258,8 +265,6 @@ class ClientsList extends React.Component {
         var remove = this.onRemoveClient;
         var change = this.onChangeClient;
         return <div>
-            <h2>Добавить клиента</h2>
-            <p></p>
             <ClientForm onSubmit={this.onAddClient} />
             <br />
             <h2>Список клиентов</h2>
@@ -282,13 +287,13 @@ class ClientForm extends React.Component {
         super(props);
         this.state = {
             name: "",
-            balance: 0,
+            balance: "",
             pasport: "",
             number: "",
-            rateId: 0,
-            minutesRest: 0,
-            gbRest: 0,
-            smsRest: 0,
+            rateId: "",
+            minutesRest: "",
+            gbRest: "",
+            smsRest: "",
             rates: []
         };
 
@@ -301,7 +306,6 @@ class ClientForm extends React.Component {
         this.onMinutesRestChange = this.onMinutesRestChange.bind(this);
         this.onGBRestChange = this.onGBRestChange.bind(this);
         this.onSMSRestChange = this.onSMSRestChange.bind(this);
-
     }   
     loadData() {
         var url = "/api/rates";
@@ -313,7 +317,6 @@ class ClientForm extends React.Component {
         }.bind(this);
         xhr.send();
     }
-
     componentDidMount() {
         this.loadData();
     }
@@ -369,73 +372,85 @@ class ClientForm extends React.Component {
     }
     render() {
         return (
-            <form onSubmit={this.onSubmit}>
-                <p>
-                    <label className="control-label col-4">ФИО:</label>
-                    <input type="text"
-                        className="form-control col-4"
-                        placeholder="Клиент"
-                        value={this.state.name}
-                        onChange={this.onNameChange} />
-                </p>
-                <p>
-                    <label className="control-label col-4">Баланс:</label>
-                    <input type="number"
-                        className="form-control col-4"
-                        placeholder="Баланс (руб.)"
-                        value={this.state.balance}
-                        onChange={this.onBalanceChange} />
-                </p>
-                <p>
-                    <label className="control-label col-4">Номер телефона:</label>
-                    <input type="text"
-                        className="form-control col-4"
-                        placeholder="Номер телефона"
-                        value={this.state.number}
-                        onChange={this.onNumberChange} />
-                </p>
-                <p>
-                    <label className="control-label col-4">Тариф:</label>
-                    <select className="form-control col-4" placeholder="Выберете тариф"
-                        value={this.state.rateId}
-                        onChange={this.onRateIdChange}>
-                        <option value={0}>Выберите тариф</option>
-                        {this.state.rates.map(d => (<option value={d.id}>{d.name}</option>))}
-                    </select>
-                </p>
-                <p>
-                    <label className="control-label col-4">Паспортные данные:</label>
-                    <input type="text"
-                        className="form-control col-4"
-                        placeholder="Паспортные данные"
-                        value={this.state.pasport}
-                        onChange={this.onPasportChange} />
-                </p>
-                <p>
-                    <label className="control-label col-4">Остаток пакета минут:</label>
-                    <input type="number"
-                        className="form-control col-4"
-                        placeholder="Остаток пакета минут:"
-                        value={this.state.minutesRest}
-                        onChange={this.onMinutesRestChange} />
-                </p>
-                <p>
-                    <label className="control-label col-4">Остаток пакета ГБ:</label>
-                    <input type="number"
-                        className="form-control col-4"
-                        placeholder="Остаток пакета ГБ"
-                        value={this.state.gbRest}
-                        onChange={this.onGBRestChange} />
-                </p>
-                <p>
-                    <label className="control-label col-4">Остаток пакета СМС:</label>
-                    <input type="text"
-                        className="form-control col-4"
-                        placeholder="Остаток пакета СМС"
-                        value={this.state.smsRest}
-                        onChange={this.onSMSRestChange} />
-                </p>
-                <input className="btn btn-warning" type="submit" value="Добавить" />
+            <form onSubmit={this.onSubmit} className="shadowForm shadow-lg bg-white col-sm-9">
+                <div className="formPadd">
+                    <h2>Добавить клиента:</h2>
+                    <p></p><br />
+                    <div>
+                        <div className="row mt-2">
+                            <label className="control-label col-5">ФИО:</label>
+                            <input type="text"
+                                className="form-control col-7"
+                                placeholder="Клиент"
+                                value={this.state.name}
+                                onChange={this.onNameChange} />
+                        </div>
+                        <div className="row mt-2">
+                            <label className="control-label col-5">Баланс:</label>
+                            <input type="number"
+                                className="form-control col-7"
+                                placeholder="Баланс (руб.)"
+                                value={this.state.balance}
+                                onChange={this.onBalanceChange} />
+                        </div>
+                        <div className="row mt-2">
+                            <label className="control-label col-5">Номер телефона:</label>
+                            <input type="text"
+                                className="form-control col-7"
+                                placeholder="Номер телефона"
+                                value={this.state.number}
+                                onChange={this.onNumberChange} />
+                        </div>
+                        <div className="row mt-2">
+                            <label className="control-label col-5">Тариф:</label>
+                                <select className="form-control col-7"
+                                placeholder="Выберете тариф"
+                                value={this.state.rateId}
+                                onChange={this.onRateIdChange}>
+                                <option value={0}>Выберите тариф</option>
+                                {this.state.rates.map(d => (<option value={d.id}>{d.name}</option>))}
+                            </select>
+                        </div>
+                        <div className="row mt-2">
+                            <label className="control-label col-5">Паспортные данные:</label>
+                            <input type="text"
+                                className="form-control col-7"
+                                placeholder="Паспортные данные"
+                                value={this.state.pasport}
+                                onChange={this.onPasportChange} />
+                        </div>
+                        <div className="row mt-2">
+                            <label className="control-label col-5">Остаток пакета минут:</label>
+                            <input type="number"
+                                className="form-control col-7"
+                                placeholder="Остаток пакета минут:"
+                                value={this.state.minutesRest}
+                                onChange={this.onMinutesRestChange} />
+                        </div>
+                        <div className="row mt-2">
+                            <label className="control-label col-5">Остаток пакета ГБ:</label>
+                            <input type="number"
+                                className="form-control col-7"
+                                placeholder="Остаток пакета ГБ"
+                                value={this.state.gbRest}
+                                onChange={this.onGBRestChange} />
+                        </div>
+                        <div className="row mt-2">
+                            <label className="control-label col-5">Остаток пакета СМС:</label>
+                            <input type="text"
+                                className="form-control col-7"
+                                placeholder="Остаток пакета СМС"
+                                value={this.state.smsRest}
+                                onChange={this.onSMSRestChange} />
+                        </div>
+                        <br/>
+                        <div className="row mt-2">
+                            <div className="col-sm-3"></div>
+                            <input className="btn btn-primary col-sm-6" type="submit" value="Добавить" />
+                            <div className="col-sm-3"></div>
+                        </div>
+                    </div>
+                </div>
             </form>
         );
     }

@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { useHistory } from "react-router-dom";
+import './custom.css'
 
 const ChangeRate = () => {
     let history = useHistory();
@@ -8,7 +9,9 @@ const ChangeRate = () => {
         history.push("/rates");
     };
     return (
-        <button className='btn btn-outline-primary' onClick={goToRates}>Сменить тариф</button>
+        <div className="text-center">
+            <button className='btn btn-outline-primary' onClick={goToRates}>Сменить тариф</button>
+            </div>
     );
 };
 //export default About;
@@ -68,39 +71,80 @@ export class PersonalArea extends Component {
     render() {
         return (
             <div>
-                <h4>
-                    <strong> Ваш баланс:</strong> {this.state.client.balance}
-                </h4>
-                <hr/>
-                <h4>Личные данные</h4>
-                <br/>
-                <p>
-                    <strong>ФИО:</strong> {this.state.client.name}
-                </p>
-                <p>
-                    <strong>Номер телефона:</strong> {this.state.client.number}
-                </p>
-                <p>
-                    <strong>Серия и номер паспорта:</strong> {this.state.client.pasport}
-                </p>
-                <hr />
+                <div >
+                    <div className="formPadd">
+                        <h2>Здравствуйте, {this.state.client.name}!</h2>
+                        <h5>{this.state.client.number}</h5>
+                        <br />
 
-                <h4>Тарифный план:</h4>
-                <br />
-                <p>
-                    <strong>{this.state.clientsRate.name}</strong>
-                </p>
-                <p>
-                    <strong> Остаток минут:</strong> {this.state.client.minutesRest} из {this.state.clientsRate.minutes}
-                </p>
-                <p>
-                    <strong>Остаток СМС:</strong> {this.state.client.smsRest} из {this.state.clientsRate.sms}
-                </p>
-                <p>
-                    <strong>Остаток ГБ: </strong>{this.state.client.gbRest} из {this.state.clientsRate.gb}
-                </p>
+                        <div>
+                            <h5 className="formPadd shadow-lg bg-white text-center">
+                                <div className="row mt-2">
+                                    <div className="col-4">
+                                        Ваш баланс: <strong>{this.state.client.balance} руб.</strong>
+                                    </div> 
+                                    <div className="col-4">
+                                        Ваш тариф: {this.state.clientsRate.name} 
+                                    </div>
+                                    <div className="col-1">
+                                    </div>
+                                    <div className="col-3">
+                                        <ChangeRate />
+                                    </div>
+                                </div>
+                            </h5>
 
-                <ChangeRate />              
+                            <br />
+                            <br />
+
+                            <div className="formPadd shadow bg-white">
+                                <strong>Остатки по пакетам:</strong>
+                                <div className="row mt-2">
+                                    <div className="col-4">
+                                        Остаток минут: {this.state.client.minutesRest}
+                                    </div>
+                                    <div className="col-4">
+                                        Остаток СМС: {this.state.client.smsRest}
+                                    </div>
+                                    <div className="col-4">
+                                        Остаток ГБ: {this.state.client.gbRest}
+                                    </div>
+                                </div>
+
+                                <hr />
+
+                                <strong>Мой тарифный план</strong>
+                                <div className="row mt-2">
+                                    <div className="col-4">
+                                        Минут в месяц: {this.state.clientsRate.minutes}
+                                    </div>
+                                    <div className="col-4">
+                                        СМС в месяц: {this.state.clientsRate.sms}
+                                    </div>
+                                    <div className="col-4">
+                                        ГБ в месяц: {this.state.clientsRate.gb}
+                                    </div>
+                                </div>
+
+                                <hr/>
+
+                                <strong>Личные данные</strong>
+                                <div className="row mt-2">
+                                    <div className="col-4">
+                                        ФИО: {this.state.client.name}
+                                    </div>
+                                    <div className="col-4">
+                                        Серия и номер паспорта: {this.state.client.pasport}
+                                    </div>
+                                    <div className="col-4">
+                                        Номер телефона: {this.state.client.number}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div >
+                    </div>
+                </div>
             </div>
         );
     }

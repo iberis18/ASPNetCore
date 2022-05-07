@@ -1,6 +1,22 @@
 import { Alert } from 'bootstrap';
 import React, { Component } from 'react';
 import { render } from 'react-dom';
+import './custom.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Tooltip, Button } from "reactstrap"
+import { useHistory } from "react-router-dom";
+
+
+const LoginPage = () => {
+    let history = useHistory();
+
+    const goToLogin = () => {
+        history.push("/Login");
+    };
+    return (
+        <button className="btn btn-outline-primary" onClick={goToLogin}>Войти в систему</button>
+    );
+};
 
 export class Registration extends Component {
     static displayName = Registration.name;
@@ -80,36 +96,63 @@ export class Registration extends Component {
             alert("Заполните все поля!");
     }
 
+
     render() {
         return (
             <div>
-                <form onSubmit={this.onSubmit}>
-                    <p>
-                        <label className="control-label col-4">Номер телефона:</label>
-                        <input type="text"
-                            className="form-control col-4"
-                            placeholder="Email"
-                            value={this.state.number}
-                            onChange={this.onNumberChange} />
-                    </p>
-                    <p>
-                        <label className="control-label col-4">Пароль:</label>
-                        <input type="password"
-                            className="form-control col-4"
-                            placeholder="Пароль"
-                            value={this.state.password}
-                            onChange={this.onPasswordChange} />
-                    </p>
-                    <p>
-                        <label className="control-label col-4">Повторите пароль:</label>
-                        <input type="password"
-                            className="form-control col-4"
-                            placeholder="Повторите пароль"
-                            value={this.state.passwordConfirm}
-                            onChange={this.onPasswordConfirmChange} />
-                    </p>
-                    <input className="btn btn-warning" type="submit" value="Зарегестрироваться" />
-                </form>
+                <div className="loginBody" >
+                    <form onSubmit={this.onSubmit} className="formPadd shadow-lg bg-white">
+                        <h2>Регистрация</h2>
+                        <br />
+
+                        <div className="row">
+                            <div className="col-sm-7">
+                                <p>Ваш номер обслуживается нашим опрератором? Зарегестрируйтесь в системе!</p>
+                                <div className="row mt-2">
+                                    <label className="control-label col-6">Номер телефона:</label>
+                                    <input type="text"
+                                        className="form-control col-6"
+                                        placeholder="Email"
+                                        value={this.state.number}
+                                        onChange={this.onNumberChange} />
+                                </div>
+                                <div className="row mt-2">
+                                    <label className="control-label col-6">Пароль:</label>
+                                    <input type="password"
+                                        className="form-control col-6"
+                                        placeholder="Пароль"
+                                        value={this.state.password}
+                                        onChange={this.onPasswordChange} />
+                                </div>
+                                <div className="row mt-2">
+                                    <label className="control-label col-6">Повторите пароль:</label>
+                                    <input type="password"
+                                        className="form-control col-6"
+                                        placeholder="Повторите пароль"
+                                        value={this.state.passwordConfirm}
+                                    onChange={this.onPasswordConfirmChange} />
+                                </div>
+                                <br/>
+                                <div className="row mt-2">
+                                    <div className="cal-3"><LoginPage /></div>
+                                    <div className="col-5"/>
+                                    <input className="col-4 btn btn-primary" type="submit" value="Зарегестрироваться" />
+                                </div>
+                            </div>
+
+                            <div className="col-sm-5">
+                                <ul>
+                                    <li>Пароль должен содержать минимум 6 символов</li>
+                                    <li>Пароль должен содержать минимум 1 цифру</li>
+                                    <li>Пароль должен содержать минимум 1 строчную букву</li>
+                                    <li>Пароль должен содержать минимум 1 прописную букву</li>
+                                    <li>Пароль должен содержать минимум 1 символ</li>
+                                </ul>
+                                </div>
+                            </div>
+                        <br/>
+                    </form>
+                </div>
             </div>
         );
     }

@@ -1,0 +1,44 @@
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+code {
+  color: #E01A76;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.form {
+    padding: 40px;
+}
+
+.formPadd {
+    padding: 50px;
+}
+.shadowForm {
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+.loginBody {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 65vh;
+}
+
+.loginForm {
+    width: 500px;
+    padding: 32px;
+    border-radius: 10px;
+    box-shadow: 10px 10px 30px #000;
+}
+
+.passwordAlert {
+    font-size: 12px;
+}

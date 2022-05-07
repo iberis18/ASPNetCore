@@ -266,6 +266,7 @@
     <Compile Include="Class1.cs" />
     <Compile Include="Models\ChangeRateViewModel.cs" />
     <Compile Include="Models\Client.cs" />
+    <Compile Include="Operations\ArchiveRateOperation.cs" />
     <Compile Include="Operations\ChangeRateOperation.cs" />
     <Compile Include="Operations\DBDataOperation.cs" />
     <Compile Include="Interfaces\IDbCrud.cs" />

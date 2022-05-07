@@ -2,6 +2,7 @@ import { Alert } from 'bootstrap';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { NavMenu } from './NavMenu';
+import './custom.css'
 
 export class Login extends Component {
     static displayName = Login.name;
@@ -42,9 +43,6 @@ export class Login extends Component {
                 if (content.error)
                     alert(content.error);
                 else {
-                    alert(content.message);
-                    //this.NavMenu.render();
-                    //this.forceUpdate();
                     window.location.reload();
                 }
 
@@ -59,26 +57,34 @@ export class Login extends Component {
     render() {
         return (
             <div>
-                <CheckAuth />
-                <form onSubmit={this.onSubmit}>
-                    <p>
-                        <label className="control-label col-4">Номер телефона:</label>
-                        <input type="text"
-                            className="form-control col-4"
-                            placeholder="Номер телефона"
-                            value={this.state.number}
-                            onChange={this.onNumberChange} />
-                    </p>
-                    <p>
-                        <label className="control-label col-4">Пароль:</label>
-                        <input type="password"
-                            className="form-control col-4"
-                            placeholder="Пароль"
-                            value={this.state.password}
-                            onChange={this.onPasswordChange} />
-                    </p>
-                    <input className="btn btn-warning" type="submit" value="Войти" />
-                </form>
+                <div className="loginBody" >
+                    <form onSubmit={this.onSubmit} className="formPadd shadow-lg bg-white">
+                        <h2>Вход</h2>
+                        <br/>
+                        <CheckAuth />
+
+                        <div className="row mt-2">
+                            <label className="control-label col-6">Номер телефона:</label>
+                            <input type="text"
+                                className="form-control col-6"
+                                placeholder="Номер телефона"
+                                value={this.state.number}
+                                onChange={this.onNumberChange} />
+                        </div>
+                        <div className="row mt-2">
+                            <label className="control-label col-6">Пароль:</label>
+                            <input type="password"
+                                className="form-control col-6"
+                                placeholder="Пароль"
+                                value={this.state.password}
+                                onChange={this.onPasswordChange} />
+                        </div>
+                        <br/>
+                        <div className="row mt-2">
+                            <input className="btn btn-primary col-12" type="submit" value="Войти" />
+                        </div>
+                    </form>
+                </div>
             </div>
         );
     }

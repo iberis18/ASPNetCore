@@ -9,9 +9,10 @@ import { Registration } from './components/Registration';
 import { Login } from './components/Login';
 import { Rates } from './components/Rates';
 import { PersonalArea } from './components/PersonalArea'
-
+import { RatesInArchive } from './components/RatesInArchive';
 
 import './custom.css'
+
 
 export default class App extends Component {
   static displayName = App.name;
@@ -21,6 +22,7 @@ export default class App extends Component {
       <Layout>
             <Route path='/clients' component={Clients} />
             <Route path='/rates' component={Rates} />
+            <Route path='/ratesInArchive' component={RatesInArchive} />
             <Route path='/counter' component={Counter} />
             <Route path='/fetch-data' component={FetchData} />
             <Route path='/login' component={Login} />

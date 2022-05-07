@@ -126,6 +126,9 @@ class LoginButton extends Component {
                         <NavLink tag={Link} className="text-dark" to="/clients">Клиенты</NavLink>
                     </NavItem>
                     <NavItem>
+                        <NavLink tag={Link} className="text-dark" to="/ratesInArchive">Архив тарифов</NavLink>
+                    </NavItem>
+                    <NavItem>
                         <NavLink tag={Link} className="text-dark" onClick={this.onClick}>Выход</NavLink>
                     </NavItem>
                 </>

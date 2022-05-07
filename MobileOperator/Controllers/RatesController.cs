@@ -18,10 +18,14 @@ namespace ASPNetCoreWebAPI.Controllers
     [ApiController]
     public class RatesController : ControllerBase
     {
+        ArchiveRateOperation archiveRateOperation;
         DBDataOperation DB;
+
         public RatesController(MobileOperatorContext context)
         {
-            DB = new DBDataOperation(new DBRepository(context));
+            DBRepository rep = new DBRepository(context);
+            DB = new DBDataOperation(rep);
+            archiveRateOperation = new ArchiveRateOperation(rep);
         }
 
         [HttpGet]
@@ -48,20 +52,26 @@ namespace ASPNetCoreWebAPI.Controllers
             return Ok(rate);
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Create([FromBody] BLL.Client client)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] BLL.Rate rate)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-        //    DB.CreateClient(client);
-        //    //_context.Client.Add(client);
-        //    //await _context.SaveChangesAsync();
+            DB.CreateRate(rate);
+            //_context.Client.Add(client);
+            //await _context.SaveChangesAsync();
 
-        //    return CreatedAtAction("GetClient", new { id = client.Id }, client);
-        //}
+            return CreatedAtAction("GetRate", new { id = rate.Id }, rate);
+        }
+
+        [HttpGet("archive")]
+        public IEnumerable<BLL.Rate> GetAllArchive()
+        {
+            return archiveRateOperation.GetAll();
+        }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] BLL.Rate rate)
