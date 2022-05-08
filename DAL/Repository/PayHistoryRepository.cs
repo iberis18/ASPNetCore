@@ -8,7 +8,7 @@ using DAL.Entity;
 
 namespace DAL.Repository
 {
-    class PayHistoryRepository : IRepository<PayHistory>
+    public class PayHistoryRepository : IRepository<PayHistory>
     {
         private MobileOperatorContext db;
 

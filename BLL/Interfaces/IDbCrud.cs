@@ -14,6 +14,7 @@ namespace BLL.Interfaces
         void CreateClient(Client c);
         void UpdateClient(Client c, int id);
         void DeleteClient(int id);
+        void CreatePayHistory(PayHistory r);
 
 
         List<Rate> GetAllRates();

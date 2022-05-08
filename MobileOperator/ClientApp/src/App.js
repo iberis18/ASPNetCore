@@ -9,6 +9,7 @@ import { Login } from './components/Login';
 import { Rates } from './components/Rates';
 import { PersonalArea } from './components/PersonalArea'
 import { RatesInArchive } from './components/RatesInArchive';
+import { PayHistory } from './components/PayHistory';
 
 import './custom.css'
 
@@ -27,6 +28,7 @@ export default class App extends Component {
             <Route path='/login' component={Login} />
             <Route path='/registration' component={Registration} />
             <Route path='/personalArea' component={PersonalArea} />
+            <Route path='/payHistory' component={PayHistory} />
             <Redirect from='/' to='/rates' />
       </Layout>
     );

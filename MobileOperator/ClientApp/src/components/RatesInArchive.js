@@ -154,7 +154,7 @@ class Rate extends Component {
                         </div>
                         <div className="row mt-3">
                             <div className="col-sm-8">
-                                <button type="button" class="btn btn-outline-primary" onClick={() => this.TurnOnRate()}>Востановить тариф</button>
+                                <button type="button" class="btn btn-outline-info" onClick={() => this.TurnOnRate()}>Востановить тариф</button>
                             </div>
                         </div>
                     </div>

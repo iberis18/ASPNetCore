@@ -1,6 +1,9 @@
 ﻿import React, { Component } from 'react';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { extend } from 'jquery';
 import './custom.css'
+import { useHistory } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 export class Rates extends Component {
@@ -16,6 +19,10 @@ export class Rates extends Component {
             number: ""
         };
         this.loadData = this.loadData.bind(this);
+        this.GetUser = this.GetUser.bind(this);
+        this.CheckRole = this.CheckRole.bind(this);
+        this.GetRate = this.GetRate.bind(this);
+
     }
 
     componentDidMount() {
@@ -23,6 +30,7 @@ export class Rates extends Component {
     }
 
     loadData() {
+        this.setState({ rates: [] });
         var url = "/api/rates";
         var xhr = new XMLHttpRequest();
         xhr.open("get", url, true);
@@ -54,9 +62,7 @@ export class Rates extends Component {
         xhr.open("get", url, true);
         xhr.onload = function () {
             var data = JSON.parse(xhr.responseText);
-            this.setState({ client: data });
-            this.GetRate();
-            this.loadData();
+            this.setState({ client: data }, () => this.GetRate());
         }.bind(this);
         xhr.send();
     }
@@ -67,7 +73,7 @@ export class Rates extends Component {
         xhr.open("get", url, true);
         xhr.onload = function () {
             var data = JSON.parse(xhr.responseText);
-            this.setState({ clientsRate: data });
+            this.setState({ clientsRate: data }, () => this.loadData());
         }.bind(this);
         xhr.send();
     }
@@ -83,7 +89,7 @@ export class Rates extends Component {
                         <div>
                             {
                                 this.state.rates.map((rate) => {
-                                    return <Rate rate={rate} client={this.state.client} role={this.state.role} loadData={this.loadData} />
+                                    return <Rate rate={rate} client={this.state.client} role={this.state.role} loadData={this.loadData} GetUser={this.GetUser} />
                                 })
                             }
                         </div>
@@ -97,7 +103,7 @@ export class Rates extends Component {
                         <div>
                             {
                                 this.state.rates.map((rate) => {
-                                    return <Rate rate={rate} client={this.state.client} role={this.state.role} loadData={this.loadData} />
+                                    return <Rate rate={rate} client={this.state.client} role={this.state.role} loadData={this.loadData} GetUser={this.GetUser} />
                                 })
                             }
                         </div>
@@ -189,11 +195,16 @@ class Rate extends Component {
         xhr.open("post", url, true);
         xhr.setRequestHeader("Content-Type", "application/json;");
         xhr.onload = function () {
-            var data = JSON.parse(xhr.responseText);
-            if (data !== "")
+            //var data = JSON.parse(xhr.responseText);
+            if (xhr.responseText !== "") {
+                var data = JSON.parse(xhr.responseText);
                 alert(data.message);
-            else
-                this.props.loadData();
+                return false;
+            }
+            else {
+                this.props.GetUser();
+                return true;
+            }
         }.bind(this);
         xhr.send(JSON.stringify({ ClientId: this.state.client.id, RateId: this.state.id }));
     }
@@ -202,8 +213,6 @@ class Rate extends Component {
         this.setState({ status: false }, () => {
             this.EditRate()
         });
-        //this.setState({ status: false });
-        //this.EditRate();
     }
 
     EditRate() {
@@ -442,19 +451,25 @@ class CurrentButton extends Component {
         super(props);
         this.state = {
             rateId: props.rateId,
-            clientsRate: props.clientsRate
+            clientsRate: props.clientsRate,
+            show: ""
         };
+        this.OnClick = this.OnClick.bind(this);
     }
-    
-    render() {
+
+    componentDidMount() {
         if (this.state.rateId == this.state.clientsRate)
-            return (
-                <button type="button" class="btn btn-info" disabled>Тариф подключен</button>
-            );
+            this.setState({ show: <button type="button" className="btn btn-info" disabled>Тариф подключен</button> });
         else
-            return (
-                <button type="button" class="btn btn-outline-info" onClick={() => this.props.ChangeRate()}>Подключить тариф</button>
-            );
+            this.setState({ show: <button type="button" className="btn btn-outline-info" onClick={() => { this.OnClick() }}>Подключить тариф</button>})
+    }
+
+    OnClick() {
+        this.props.ChangeRate();
+    }
+
+    render() {
+        return (<div>{ this.state.show }</div>);
     }
 }
 

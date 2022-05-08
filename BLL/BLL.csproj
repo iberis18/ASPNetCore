@@ -267,6 +267,8 @@
     <Compile Include="Models\ChangeRateViewModel.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\PayBalanceViewModel.cs" />
+    <Compile Include="Models\PayHistory.cs" />
+    <Compile Include="Models\Service.cs" />
     <Compile Include="Operations\ArchiveRateOperation.cs" />
     <Compile Include="Operations\ChangeRateOperation.cs" />
     <Compile Include="Operations\DBDataOperation.cs" />
@@ -274,6 +276,7 @@
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\Rate.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
+    <Compile Include="Operations\PayHistoryOperation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\ServiceModule.cs" />
   </ItemGroup>

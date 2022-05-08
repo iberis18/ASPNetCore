@@ -133,6 +133,17 @@ namespace BLL
             Save();
         }
 
+        public void CreatePayHistory(PayHistory r)
+        {
+            db.PayHistorys.Create(new DAL.Entity.PayHistory()
+            {
+                Id = r.Id,
+                ClientId = r.ClientId,
+                Date = r.Date,
+                Cost = r.Cost
+            }) ;
+            Save();
+        }
 
         public bool Save()
         {

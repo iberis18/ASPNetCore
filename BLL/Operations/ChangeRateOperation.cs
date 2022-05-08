@@ -38,6 +38,15 @@ namespace BLL.Operations
                         cl.SMSRest = newRate.SMS;
                         cl.GBRest = newRate.GB;
                         db.Clients.Update(cl);
+
+                        DAL.Entity.PayHistory p = new DAL.Entity.PayHistory();
+                        p.Client = cl;
+                        p.ClientId = cl.Id;
+                        p.Cost = newRate.Cost * (-1);
+                        p.Date = DateTime.Today;
+                        db.PayHistorys.Create(p);
+
+                        //PayHistory pay = new PayHistory(db.PayHistorys.)
                         Save();
 
                     }
@@ -58,6 +67,13 @@ namespace BLL.Operations
                 DAL.Entity.Client cl = db.Clients.GetItem(clientId);
                 cl.Balance += sum;
                 db.Clients.Update(cl);
+
+                DAL.Entity.PayHistory p = new DAL.Entity.PayHistory();
+                p.Client = cl;
+                p.ClientId = cl.Id;
+                p.Cost = sum;
+                p.Date = DateTime.Today;
+                db.PayHistorys.Create(p);
                 Save();
             }
             else message = "Данный клиент не найден";
