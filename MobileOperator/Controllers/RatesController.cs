@@ -21,11 +21,10 @@ namespace ASPNetCoreWebAPI.Controllers
         ArchiveRateOperation archiveRateOperation;
         DBDataOperation DB;
 
-        public RatesController(MobileOperatorContext context)
+        public RatesController()
         {
-            DBRepository rep = new DBRepository(context);
-            DB = new DBDataOperation(rep);
-            archiveRateOperation = new ArchiveRateOperation(rep);
+            DB = new DBDataOperation();
+            archiveRateOperation = new ArchiveRateOperation();
         }
 
         [HttpGet]

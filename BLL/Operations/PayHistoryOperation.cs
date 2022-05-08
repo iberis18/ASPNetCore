@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BLL;
 using BLL.Interfaces;
-using DAL;
+using DAL.Repository;
 using DAL.Interfaces;
 
 namespace BLL.Operations
@@ -16,6 +16,10 @@ namespace BLL.Operations
         public PayHistoryOperation(IDbRepos repos)
         {
             db = repos;
+        }
+        public PayHistoryOperation()
+        {
+            db = new DBRepository(); ;
         }
         public List<PayHistory> GetPayHistory(int clientId)
         {

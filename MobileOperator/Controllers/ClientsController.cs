@@ -21,11 +21,9 @@ namespace ASPNetCoreWebAPI.Controllers
     public class ClientsController : ControllerBase
     {
         DBDataOperation DB;
-        DBRepository repos;
-        public ClientsController(MobileOperatorContext context)
+        public ClientsController()
         {
-            repos = new DBRepository(context);
-            DB = new DBDataOperation(repos);
+            DB = new DBDataOperation();
 
             //db = new DAL.Repository.DBRepository();
 

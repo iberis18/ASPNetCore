@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BLL;
 using BLL.Interfaces;
-using DAL;
+using DAL.Repository;
 using DAL.Interfaces;
 
 namespace BLL.Operations
@@ -16,6 +16,11 @@ namespace BLL.Operations
         public ArchiveRateOperation(IDbRepos repos)
         {
             db = repos;
+        }
+
+        public ArchiveRateOperation()
+        {
+            db = new DBRepository();
         }
 
         public List<Rate> GetAll()

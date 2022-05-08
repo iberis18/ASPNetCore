@@ -22,9 +22,9 @@ namespace ASPNetCoreWebAPI.Controllers
     public class GetPayHistoryController : ControllerBase
     {
         PayHistoryOperation DB;
-        public GetPayHistoryController(MobileOperatorContext context)
+        public GetPayHistoryController()
         {
-            DB = new PayHistoryOperation(new DBRepository(context));
+            DB = new PayHistoryOperation();
         }
 
         [Authorize(Roles = "user")]

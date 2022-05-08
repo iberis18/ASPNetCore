@@ -3,6 +3,7 @@ using DAL;
 using DAL.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
+using DAL.Repository;
 
 namespace BLL
 {
@@ -12,6 +13,11 @@ namespace BLL
         public DBDataOperation(IDbRepos repos)
         {
             db = repos;
+        }
+        public DBDataOperation()
+        {
+            db = new DBRepository();
+            
         }
 
         ///////////клиент

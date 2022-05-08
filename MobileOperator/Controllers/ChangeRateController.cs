@@ -22,11 +22,9 @@ namespace ASPNetCoreWebAPI.Controllers
     public class ChangeRateController : ControllerBase
     {
         DBDataOperation DB;
-        DBRepository repos;
-        public ChangeRateController(MobileOperatorContext context)
+        public ChangeRateController()
         {
-            repos = new DBRepository(context);
-            DB = new DBDataOperation(repos);
+            DB = new DBDataOperation();
 
             //db = new DAL.Repository.DBRepository();
 
@@ -48,13 +46,14 @@ namespace ASPNetCoreWebAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            ChangeRateOperation changeRate = new ChangeRateOperation(repos);
+            ChangeRateOperation changeRate = new ChangeRateOperation();
 
 
             string error = changeRate.ChangeRate(model.ClientId, model.RateId);
             if (error == "")
                 return NoContent();
             else
+
             {
                 var msg = new { message = error };
                 return Ok(msg);
@@ -69,7 +68,7 @@ namespace ASPNetCoreWebAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            ChangeRateOperation changeRate = new ChangeRateOperation(repos);
+            ChangeRateOperation changeRate = new ChangeRateOperation();
 
 
             string error = changeRate.PayBalance(model.Sum, model.ClientId);
