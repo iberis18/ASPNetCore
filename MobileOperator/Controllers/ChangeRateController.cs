@@ -2,42 +2,35 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DAL.Entity;
-using DAL.Repository;
-using BLL.Interfaces;
-using BLL.Util;
 using BLL;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using BLL.Operations;
 using BLL.Models;
+using Microsoft.Extensions.Logging;
 
 
 namespace ASPNetCoreWebAPI.Controllers
 {
-    //[Route("api/[controller]")]
     [Produces("application/json")]
     [ApiController]
     public class ChangeRateController : ControllerBase
     {
         DBDataOperation DB;
+        ILogger logger; // логгер
+
         public ChangeRateController()
         {
             DB = new DBDataOperation();
 
-            //db = new DAL.Repository.DBRepository();
-
-            //DBDataOperation db = new DBDataOperation();
-            //if (_context.Client.Count() == 0)
-            //{
-            //    _context.Client.Add(new Client { Name = "Вася Пупкин", RateId = 1 });
-            //    _context.Client.Add(new Client { Name = "Маша Крючкина", RateId = 2 });
-            //    _context.SaveChanges();
-            //}
+            var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddConsole();
+            });
+            logger = loggerFactory.CreateLogger<ChangeRateController>();
         }
 
-
+        [Authorize(Roles = "user")]
         [HttpPost]
         [Route("api/BL/ChangeRate")]
         public async Task<IActionResult> ChangeRate([FromBody] ChangeRateViewModel model)
@@ -51,15 +44,18 @@ namespace ASPNetCoreWebAPI.Controllers
 
             string error = changeRate.ChangeRate(model.ClientId, model.RateId);
             if (error == "")
+            {
+                logger.LogInformation("User № " + model.ClientId + "switched to rate № " + model.RateId);
                 return NoContent();
+            }
             else
-
             {
                 var msg = new { message = error };
                 return Ok(msg);
             }
         }
 
+        [Authorize(Roles = "user")]
         [HttpPost]
         [Route("api/BL/PayBalance")]
         public async Task<IActionResult> Pay([FromBody] PayBalanceViewModel model)
@@ -73,7 +69,10 @@ namespace ASPNetCoreWebAPI.Controllers
 
             string error = changeRate.PayBalance(model.Sum, model.ClientId);
             if (error == "")
+            {
+                logger.LogInformation("User № " + model.ClientId + "topped up the balance by " + model.Sum + " rubles");
                 return NoContent();
+            }
             else
             {
                 var msg = new { message = error };

@@ -2,29 +2,28 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DAL.Entity;
-using DAL.Repository;
-using BLL.Interfaces;
-using BLL.Util;
-using BLL;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using BLL.Operations;
-using BLL.Models;
-
+using Microsoft.Extensions.Logging;
 
 namespace ASPNetCoreWebAPI.Controllers
 {
     [Route("api/[controller]")]
-    //[Produces("application/json")]
     [ApiController]
     public class GetPayHistoryController : ControllerBase
     {
         PayHistoryOperation DB;
+        ILogger logger; // логгер
+
         public GetPayHistoryController()
         {
             DB = new PayHistoryOperation();
+            var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddConsole();
+            });
+            logger = loggerFactory.CreateLogger<GetPayHistoryController>();
         }
 
         [Authorize(Roles = "user")]

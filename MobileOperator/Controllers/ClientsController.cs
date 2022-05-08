@@ -2,16 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DAL.Entity;
-using DAL.Repository;
-using BLL.Interfaces;
-using BLL.Util;
 using BLL;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
-using BLL.Operations;
-using BLL.Models;
+using Microsoft.Extensions.Logging;
 
 
 namespace ASPNetCoreWebAPI.Controllers
@@ -21,51 +15,27 @@ namespace ASPNetCoreWebAPI.Controllers
     public class ClientsController : ControllerBase
     {
         DBDataOperation DB;
+        ILogger logger; // логгер
+
         public ClientsController()
         {
             DB = new DBDataOperation();
-
-            //db = new DAL.Repository.DBRepository();
-
-            //DBDataOperation db = new DBDataOperation();
-            //if (_context.Client.Count() == 0)
-            //{
-            //    _context.Client.Add(new Client { Name = "Вася Пупкин", RateId = 1 });
-            //    _context.Client.Add(new Client { Name = "Маша Крючкина", RateId = 2 });
-            //    _context.SaveChanges();
-            //}
+            var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddConsole();
+            });
+            logger = loggerFactory.CreateLogger<ClientsController>();
         }
 
         [Authorize(Roles = "admin")]
         [HttpGet]
         public IEnumerable<BLL.Client> GetAll()
         {
-            //return _context.Client;
-            //return db.Clients.GetList();
-            return DB.GetAllClients();
-            
+            return DB.GetAllClients(); 
         }
 
-        //[Authorize(Roles = "admin")]
-        //[HttpGet("{id}")]
-        //public async Task<IActionResult> GetClient([FromRoute] int id)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
 
-        //    //var client = await _context.Client.SingleOrDefaultAsync(c => c.Id == id);
-        //    var client = DB.GetClient(id);
-
-        //    if (client == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return Ok(client);
-        //}
-
+        [Authorize(Roles = "user")]
         [HttpGet("{number}")]
         public async Task<IActionResult> GetCurrentClient([FromRoute] string number)
         {
@@ -84,6 +54,7 @@ namespace ASPNetCoreWebAPI.Controllers
             return Ok(client);
         }
 
+
         [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] BLL.Client client)
@@ -94,8 +65,7 @@ namespace ASPNetCoreWebAPI.Controllers
             }
 
             DB.CreateClient(client);
-            //_context.Client.Add(client);
-            //await _context.SaveChangesAsync();
+            logger.LogInformation("New user " + client.Number + " added by admin");
 
             return CreatedAtAction("GetClient", new { id = client.Id }, client);
         }
@@ -109,35 +79,10 @@ namespace ASPNetCoreWebAPI.Controllers
                 return BadRequest(ModelState);
             }
             DB.UpdateClient(client, id);
+            logger.LogInformation("User " + client.Number + " edited by admin");
 
             return NoContent();
         }
-
-
-        //[Authorize(Roles = "user")]
-        //// GET api/clients/rateId/clientId
-        //[HttpGet]
-        //[Route("{rateId:int}/{clientId:int}")]
-        ////[HttpGet("{rateId}/{clientId}")]
-        //public async Task<IActionResult> ChangeRate([FromRoute] int rateId, [FromBody] int clientId)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-        //    ChangeRateOperation changeRate = new ChangeRateOperation(repos);
-
-
-        //    string error = changeRate.ChangeRate(clientId, rateId);
-        //    if (error == "")
-        //        return NoContent();
-        //    else
-        //    {
-        //        var msg = new { message = error };
-        //        return Ok(msg);
-        //    }
-
-        //}
 
 
         [Authorize(Roles = "admin")]
@@ -149,6 +94,7 @@ namespace ASPNetCoreWebAPI.Controllers
                 return BadRequest(ModelState);
             }
             DB.DeleteClient(id);
+            logger.LogInformation("User № " + id + " deleted by admin");
             return NoContent();
         }
     }

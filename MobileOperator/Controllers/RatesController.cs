@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DAL.Entity;
-using DAL.Repository;
-using BLL.Interfaces;
-using BLL.Util;
 using BLL;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using BLL.Operations;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace ASPNetCoreWebAPI.Controllers
@@ -20,11 +17,18 @@ namespace ASPNetCoreWebAPI.Controllers
     {
         ArchiveRateOperation archiveRateOperation;
         DBDataOperation DB;
+        ILogger logger; // логгер
+
 
         public RatesController()
         {
             DB = new DBDataOperation();
             archiveRateOperation = new ArchiveRateOperation();
+            var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddConsole();
+            });
+            logger = loggerFactory.CreateLogger<RatesController>();
         }
 
         [HttpGet]
@@ -51,6 +55,7 @@ namespace ASPNetCoreWebAPI.Controllers
             return Ok(rate);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] BLL.Rate rate)
         {
@@ -60,9 +65,7 @@ namespace ASPNetCoreWebAPI.Controllers
             }
 
             DB.CreateRate(rate);
-            //_context.Client.Add(client);
-            //await _context.SaveChangesAsync();
-
+            logger.LogInformation("New rate " + rate.Name + " added by admin");
             return CreatedAtAction("GetRate", new { id = rate.Id }, rate);
         }
 
@@ -72,6 +75,7 @@ namespace ASPNetCoreWebAPI.Controllers
             return archiveRateOperation.GetAll();
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] BLL.Rate rate)
         {
@@ -80,26 +84,9 @@ namespace ASPNetCoreWebAPI.Controllers
                 return BadRequest(ModelState);
             }
             DB.UpdateRate(rate, id);
+            logger.LogInformation("Rate №" + id +" " + rate.Name + " edited by admin");
 
             return NoContent();
         }
-
-
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> Delete([FromRoute] int id)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-        //    var item = _context.Client.Find(id);
-        //    if (item == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    _context.Client.Remove(item);
-        //    await _context.SaveChangesAsync();
-        //    return NoContent();
-        //}
     }
 }

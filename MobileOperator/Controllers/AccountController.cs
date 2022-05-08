@@ -50,7 +50,7 @@ namespace MobileOperator.Controllers
                     // установка куки
                     await _signInManager.SignInAsync(user, false);
                     var msg = new { message = "Добавлен новый пользователь: " + user.UserName };
-                    logger.LogInformation("Добавлен новый пользователь: " + user.UserName);
+                    logger.LogInformation("New user registered: " + user.UserName);
                     return Ok(msg);
                 }
                 else
@@ -78,9 +78,10 @@ namespace MobileOperator.Controllers
                 return Ok(errorMsg);
             }
         }
+
+
         [HttpPost]
         [Route("api/Account/Login")]
-        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Login([FromBody] LoginViewModel model)
         {
             if (ModelState.IsValid)
@@ -94,12 +95,12 @@ namespace MobileOperator.Controllers
                     if (await _userManager.IsInRoleAsync(user, "admin"))
                     {
                         role = "admin";
-                        logger.LogInformation("Вход администратора " + model.Number);
+                        logger.LogInformation(model.Number + " administrator login");
                     }
                     else
                     {
                         role = "user";
-                        logger.LogInformation("Вход пользователя " + model.Number);
+                        logger.LogInformation(model.Number + " user login");
                     }
                     var msg = new
                     {
@@ -134,9 +135,12 @@ namespace MobileOperator.Controllers
 
         [HttpPost]
         [Route("api/Account/LogOff")]
-        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> LogOff()
         {
+            User usr = await GetCurrentUserAsync();
+            if (usr != null) 
+                logger.LogInformation(usr.UserName + " user logout");
+
             // Удаление куки
             await _signInManager.SignOutAsync();
             var msg = new
@@ -145,16 +149,13 @@ namespace MobileOperator.Controllers
             };
             return Ok(msg);
         }
+
+
         [HttpPost]
         [Route("api/Account/isAuthenticated")]
-        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> LogisAuthenticatedOff()
         {
             User usr = await GetCurrentUserAsync();
-            //var number = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "sub")?.Value;
-            //var user = await _userManager.FindByNameAsync(number);
-            //bool IsAuth = HttpContext.User.Identity.IsAuthenticated;
-            //var message = usr == null ? "Вы Гость. Пожалуйста, выполните вход." : "Вы вошли как: " + usr.UserName;
 
             string role = "";
             string name = "";
@@ -180,6 +181,5 @@ namespace MobileOperator.Controllers
 
         }
         private Task<User> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
-
     }
 }
