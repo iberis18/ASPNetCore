@@ -61,7 +61,7 @@ export class PayHistory extends Component {
                 <div>
                     <div className="row mt-2">
                         <div className="col-sm-4 top-cover"><h5>Дата</h5></div>
-                        <div className="col-sm-4 top-cover"><h5>Сумма списания</h5></div>
+                        <div className="col-sm-4 top-cover"><h5>Сумма</h5></div>
                     </div>
                 </div>
                 <br/>
@@ -98,18 +98,29 @@ class History extends Component {
     }
 
     render() {
-        
-        return (
-            <div>
+        if (this.state.hist.cost > 0)
+            return (
                 <div>
-                    <div className="row mt-2">
-
-                        <div className="col-sm-4 top-cover">{this.state.hist.date}</div>
-                        <div className="col-sm-4 top-cover">{this.state.hist.cost} руб.</div>
+                    <div>
+                        <div className="row mt-2">
+                            <div className="col-sm-4 top-cover">{this.state.hist.date}</div>
+                            <div className="col-sm-4 top-cover text-success">+{this.state.hist.cost} руб.</div>
+                        </div>
+                        <hr />
                     </div>
-                    <hr />
                 </div>
-            </div>
-        );
+            );
+        else
+            return (
+                <div>
+                    <div>
+                        <div className="row mt-2">
+                            <div className="col-sm-4 top-cover">{this.state.hist.date}</div>
+                            <div className="col-sm-4 top-cover text-danger">{this.state.hist.cost} руб.</div>
+                        </div>
+                        <hr />
+                    </div>
+                </div>  
+            );
     }
 }

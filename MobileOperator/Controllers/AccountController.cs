@@ -6,7 +6,7 @@ using BLL.Models;
 using DAL.Entity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.Extensions.Logging;
 
 
 namespace MobileOperator.Controllers
@@ -16,11 +16,20 @@ namespace MobileOperator.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        ILogger logger; // логгер
+
         public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddConsole();
+            });
+
+            logger = loggerFactory.CreateLogger<AccountController>();
         }
+
         [HttpPost]
         [Route("api/Account/Register")]
         public async Task<IActionResult> Register([FromBody] RegisterViewModel model)
@@ -41,6 +50,7 @@ namespace MobileOperator.Controllers
                     // установка куки
                     await _signInManager.SignInAsync(user, false);
                     var msg = new { message = "Добавлен новый пользователь: " + user.UserName };
+                    logger.LogInformation("Добавлен новый пользователь: " + user.UserName);
                     return Ok(msg);
                 }
                 else
@@ -82,9 +92,15 @@ namespace MobileOperator.Controllers
                     var user = await _userManager.FindByNameAsync(model.Number);
                     string role = "";
                     if (await _userManager.IsInRoleAsync(user, "admin"))
+                    {
                         role = "admin";
+                        logger.LogInformation("Вход администратора " + model.Number);
+                    }
                     else
+                    {
                         role = "user";
+                        logger.LogInformation("Вход пользователя " + model.Number);
+                    }
                     var msg = new
                     {
                         message = "Выполнен вход пользователем: " + model.Number,
