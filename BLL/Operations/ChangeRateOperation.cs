@@ -9,9 +9,10 @@ using Microsoft.Extensions.Logging;
 
 namespace BLL.Operations
 {
+    //операции с балансом
     public class ChangeRateOperation
     {
-        IDbRepos db;
+        IDbRepos db; //репозиторий
         ILogger logger; // логгер
 
         public ChangeRateOperation(IDbRepos repos)
@@ -20,14 +21,16 @@ namespace BLL.Operations
         }
         public ChangeRateOperation()
         {
+            //логгирование
             var loggerFactory = LoggerFactory.Create(builder =>
             {
-                builder.AddConsole();
+                builder.AddConsole(); 
             });
 
             logger = loggerFactory.CreateLogger<DBDataOperation>();
             try
             {
+                //создание репозитория бд
                 db = new DBRepository();
             }
             catch
@@ -36,10 +39,12 @@ namespace BLL.Operations
             }
         }
 
+        //смена тарифа
         public string ChangeRate(int clientId, int rateId)
         {
             try
             {
+                //получаем клиента и выбранный тариф по Id
                 Client client = new Client(db.Clients.GetItem(clientId));
                 Rate newRate = new Rate(db.Rates.GetItem(rateId));
 
@@ -47,18 +52,23 @@ namespace BLL.Operations
                 if (client != null)
                     if (newRate != null)
                     {
+                        //проверяем достаточноть средств на счету абонента
                         if (client.Balance < newRate.Cost)
                             message = "Недостаточно средств на счету! Стоимость подключения тарифа " + newRate.Cost.ToString() + " руб. Пожалуйста пополните баланс";
                         else
                         {
+                            //переподключаем клиента к новому тарифу
                             DAL.Entity.Client cl = db.Clients.GetItem(clientId);
                             cl.RateId = newRate.Id;
                             cl.Balance -= newRate.Cost;
+
+                            //осуществляем обновление по пакетам минут, смс и гб
                             cl.MinutesRest = newRate.Minutes;
                             cl.SMSRest = newRate.SMS;
                             cl.GBRest = newRate.GB;
                             db.Clients.Update(cl);
 
+                            //создаем запись о списании средств со счета
                             DAL.Entity.PayHistory p = new DAL.Entity.PayHistory();
                             p.Client = cl;
                             p.ClientId = cl.Id;
@@ -83,19 +93,23 @@ namespace BLL.Operations
             }
         }
 
+
+        // операция пополнения баланса
         public string PayBalance(double sum, int clientId)
         {
             try
             {
                 Client client = new Client(db.Clients.GetItem(clientId));
-
                 string message = "";
                 if (client != null)
                 {
+                    //находим клиента по Id
                     DAL.Entity.Client cl = db.Clients.GetItem(clientId);
-                    cl.Balance += sum;
+                    //пополняем баланс
+                    cl.Balance += sum; 
                     db.Clients.Update(cl);
 
+                    //создаем запись о пополнении баланса
                     DAL.Entity.PayHistory p = new DAL.Entity.PayHistory();
                     p.Client = cl;
                     p.ClientId = cl.Id;

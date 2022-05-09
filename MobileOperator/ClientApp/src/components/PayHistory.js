@@ -1,5 +1,7 @@
 ﻿import React, { Component } from 'react';
 
+
+//страница выписки платежей
 export class PayHistory extends Component {
     static displayName = PayHistory.name;
 
@@ -13,6 +15,7 @@ export class PayHistory extends Component {
         };
     }
 
+    //проверка пользователя 
     CheckRole() {
         var url = "/api/Account/isAuthenticated";
         var xhr = new XMLHttpRequest();
@@ -25,6 +28,7 @@ export class PayHistory extends Component {
         xhr.send();
     }
 
+    //получение информации о пользователе 
     GetUser() {
         var url = "/api/Clients/" + this.state.number;
         var xhr = new XMLHttpRequest();
@@ -37,6 +41,7 @@ export class PayHistory extends Component {
         xhr.send();
     }
 
+    //загрузка списка платежей 
     loadData() {
         var url = "/api/GetPayHistory/" + this.state.client.id;
         var xhr = new XMLHttpRequest();
@@ -66,6 +71,7 @@ export class PayHistory extends Component {
                 </div>
                 <br/>
                 {
+                    //для каждого элемента из списка платежей
                     this.state.payHistory.map((h) => {
                         return <History hist={h} />
                     })
@@ -76,6 +82,8 @@ export class PayHistory extends Component {
     }
 }
 
+
+//один элемент списка платежей 
 class History extends Component {
     constructor(props) {
         super(props);
@@ -85,22 +93,10 @@ class History extends Component {
         };
     }
 
-    componentDidMount() {
-        //var date1 = this.props.hist.date;
-        //var date2 = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(date1);
-        //this.setState({ date: date2 });
-        //var data = format(this.state.hist.date, 'dd/mm/yyyy')
-        //this.setState({ date: data });
-        // dd/mm/yyyy format
-        // OR...
-        // dd/mm/yyyy format
-        //format(new Date(), 'yyyy/mm/dd')
-    }
-
     render() {
+        //если выплата положительна (зачисление)
         if (this.state.hist.cost > 0)
             return (
-                <div>
                     <div>
                         <div className="row mt-2">
                             <div className="col-sm-4 top-cover">{this.state.hist.date}</div>
@@ -108,11 +104,10 @@ class History extends Component {
                         </div>
                         <hr />
                     </div>
-                </div>
             );
         else
+        //если выплата отрицательная (списание)
             return (
-                <div>
                     <div>
                         <div className="row mt-2">
                             <div className="col-sm-4 top-cover">{this.state.hist.date}</div>
@@ -120,7 +115,6 @@ class History extends Component {
                         </div>
                         <hr />
                     </div>
-                </div>  
             );
     }
 }

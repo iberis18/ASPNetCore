@@ -9,6 +9,7 @@ using DAL.Entity;
 
 namespace DAL.Repository
 {
+    //реализация репозитория для БД
     public class DBRepository : IDbRepos
     {
         private MobileOperatorContext db;

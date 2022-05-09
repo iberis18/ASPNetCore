@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import './NavMenu.css';
 import { Login } from './Login';
 
+
+//меню нафигации 
 export class NavMenu extends Component {
   static displayName = NavMenu.name;
 
@@ -41,6 +43,9 @@ export class NavMenu extends Component {
   }
 }
 
+
+
+//выбираем отображение кнопок в меню в зависимости от роли пользователя 
 class LoginButton extends Component {
 
     constructor(props) {
@@ -51,15 +56,7 @@ class LoginButton extends Component {
         };
 
         this.onClick = this.onClick.bind(this);
-        this.onChangeRole = this.onChangeRole.bind(this);
-
     }
-
-    onChangeRole() {
-        this.CheckRole();
-        this.render();
-    }
-
 
     CheckRole() {
         var url = "/api/Account/isAuthenticated";
@@ -88,6 +85,7 @@ class LoginButton extends Component {
     }
 
     render() {
+        //меню для гостя
         if (this.state.role == "")
             return (
                 <>
@@ -103,6 +101,7 @@ class LoginButton extends Component {
                 </>
             );
         else
+            //меню для пользователя
             if (this.state.role == "user")
                 return (
                     <>
@@ -120,6 +119,7 @@ class LoginButton extends Component {
                         </NavItem>
                     </>
                 );
+            //меню для админа
             else return (
                 <>
                     <NavItem>

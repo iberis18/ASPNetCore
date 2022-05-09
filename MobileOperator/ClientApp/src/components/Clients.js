@@ -1,6 +1,9 @@
 import { extend } from 'jquery';
 import React, { Component } from 'react';
 
+//страница со списком клиентов
+
+//один клиента из списка
 class Client extends Component {
     constructor(props) {
         super(props);
@@ -30,6 +33,7 @@ class Client extends Component {
         this.onSMSRestChange = this.onSMSRestChange.bind(this);
 
     }
+    //загрузка данных о тарифах 
     loadData() {
         var url = "/api/rates";
         var xhr = new XMLHttpRequest();
@@ -44,10 +48,14 @@ class Client extends Component {
     componentDidMount() {
         this.loadData();
     }
+
+    //функции установки свойств и вызова функций из props
     onClick(e) {
+        //удаление клиента
         this.props.onRemove(this.state.data);
     }
     onChange(e) {
+        //измнение клиента
         this.props.onChange(this.state.data);
     }
     onNameChange(e) {
@@ -74,6 +82,7 @@ class Client extends Component {
     onSMSRestChange(e) {
         this.setState({ smsRest: e.target.value });
     }
+    //отправка формы 
     onSubmit(e) {
         e.preventDefault();
         var clientName = this.state.name.trim();
@@ -93,6 +102,7 @@ class Client extends Component {
             name: clientName, balance: clientBalance, number: clientNumber, pasport: clientPasport, id: clientId,
             rateId: clientRateId, minutesRest: clientMinutesRest, gbRest: clientGBRest, smsRest: clientSMSRest });
     }
+    //вывод редактируемой формы для одного клиента 
     render() {
         return <div>
             <br/>
@@ -179,6 +189,7 @@ class Client extends Component {
 }
 
 
+//список клиентов
 class ClientsList extends React.Component {
 
     constructor(props) {
@@ -203,7 +214,7 @@ class ClientsList extends React.Component {
         this.loadData();
     }
 
-    // добавление объекта
+    // добавление клиента
     onAddClient(client) {
         if (client) {
 
@@ -229,7 +240,7 @@ class ClientsList extends React.Component {
             }));
         }
     }
-    // удаление объекта
+    // удаление клиента
     onRemoveClient(client) {
         if (client) {
             var url = this.props.apiUrl + "/" + client.id;
@@ -243,6 +254,7 @@ class ClientsList extends React.Component {
             xhr.send();
         }
     }
+    //измненеи клинета
     onChangeClient(client) {
         if (client) {
             var url = this.props.apiUrl + "/" + client.id;
@@ -271,6 +283,7 @@ class ClientsList extends React.Component {
             <p></p>
             <div>
                 {
+                    //для каждого клиента из списка 
                     this.state.clients.map(function (client) {
 
                         return <Client key={client.id} client={client} onRemove={remove} onSubmit={change} />
@@ -281,6 +294,8 @@ class ClientsList extends React.Component {
     }
 }
 
+
+//форма добавления нового клиента 
 class ClientForm extends React.Component {
 
     constructor(props) {
@@ -320,6 +335,7 @@ class ClientForm extends React.Component {
     componentDidMount() {
         this.loadData();
     }
+    //функции для установки значений после изменения полей формы 
     onNameChange(e) {
         this.setState({ name: e.target.value });
     }
@@ -351,6 +367,7 @@ class ClientForm extends React.Component {
     onSMSRestChange(e) {
         this.setState({ smsRest: e.target.value });
     }
+    //отправка формы
     onSubmit(e) {
         e.preventDefault();
         var clientName = this.state.name.trim();
@@ -370,6 +387,7 @@ class ClientForm extends React.Component {
             rateId: clientRateId, gbRest: clientGBRest, smsRest: clientSMSRest, minutesRest: clientMinutesRest });
         this.setState({ name: "", balance: 0, number: "", pasport: "", rateId: 0, gbRest: 0, smsRest: 0, minutesRest: 0 });
     }
+    //вывод формы
     render() {
         return (
             <form onSubmit={this.onSubmit} className="shadowForm shadow-lg bg-white col-sm-9">
@@ -456,6 +474,8 @@ class ClientForm extends React.Component {
     }
 }
 
+
+//общий класс клиентов для экспорта
 export class Clients extends Component {
   static displayName = Clients.name;
 

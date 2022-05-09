@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Entity
 {
+    //сущность истории пополнений и списаний 
     public class PayHistory
     {
             public int Id { get; set; }

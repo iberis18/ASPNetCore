@@ -2,7 +2,10 @@
 import { useHistory } from "react-router-dom";
 import './custom.css'
 
+//страница личного кабинета
 
+//смена локации
+//переход на страницу тарифов 
 const ChangeRate = () => {
     let history = useHistory();
 
@@ -16,8 +19,8 @@ const ChangeRate = () => {
             </div>
     );
 };
-//export default About;
 
+//личный кабинет 
 export class PersonalArea extends Component {
     static displayName = PersonalArea.name;
 
@@ -38,10 +41,12 @@ export class PersonalArea extends Component {
         this.CheckRole();
     }
 
+    //изменение введенной суммы платежа (для пополнения баланса)
     onSumChange(e) {
         this.setState({ sum: e.target.value })
     }
 
+    //проверка пользователя 
     CheckRole() {
         var url = "/api/Account/isAuthenticated";
         var xhr = new XMLHttpRequest();
@@ -54,6 +59,7 @@ export class PersonalArea extends Component {
         xhr.send();
     }
 
+    //полученеи пользователя 
     GetUser() {
         var url = "/api/Clients/" + this.state.number;
         var xhr = new XMLHttpRequest();
@@ -66,6 +72,7 @@ export class PersonalArea extends Component {
         xhr.send();
     }
 
+    //получение подключенного тарифа
     GetRate() {
         var url = "/api/Rates/" + this.state.client.rateId;
         var xhr = new XMLHttpRequest();
@@ -77,6 +84,7 @@ export class PersonalArea extends Component {
         xhr.send();
     }
 
+    //поплнение баланса
     Pay() {
         if (this.state.sum > 0) {
             var url = "/api/BL/PayBalance";
@@ -98,6 +106,7 @@ export class PersonalArea extends Component {
         else alert("Введите сумму платежа больше 0");
     }
 
+    //отображение 
     render() {
         return (
             <div>

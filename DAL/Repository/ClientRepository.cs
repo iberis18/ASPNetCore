@@ -8,6 +8,7 @@ using DAL.Entity;
 
 namespace DAL.Repository
 {
+    //реализация репозитория для клиента 
     class ClientRepository : IRepository<Client>
     {
         private MobileOperatorContext db;
@@ -21,21 +22,26 @@ namespace DAL.Repository
             db = new MobileOperatorContext();
         }
 
+        //получения списка всех клиентов
         public List<Client> GetList()
         {
             return db.Client.ToList();
         }
-
+        
+        //получение клиента по ID
         public Client GetItem(int id)
         {
             return db.Client.Find(id);
         }
+
+        //получения клиента по номеру 
         public Client GetCurrentItem(string number)
         {
             Client client = db.Client.Where(c => c.Number == number).FirstOrDefault();
             return client;
         }
 
+        //создание клиента 
         public void Create(Client item)
         {
             db.Client.Add(item);
@@ -46,6 +52,7 @@ namespace DAL.Repository
             db.Entry(item).State = EntityState.Modified;
         }
 
+        //удаление клиента 
         public void Delete(int id)
         {
             Client item = db.Client.Find(id);

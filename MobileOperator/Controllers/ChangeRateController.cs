@@ -14,6 +14,8 @@ namespace ASPNetCoreWebAPI.Controllers
 {
     [Produces("application/json")]
     [ApiController]
+
+    //контроллер смены тарифа 
     public class ChangeRateController : ControllerBase
     {
         DBDataOperation DB;
@@ -30,6 +32,8 @@ namespace ASPNetCoreWebAPI.Controllers
             logger = loggerFactory.CreateLogger<ChangeRateController>();
         }
 
+
+        //смена тарифа 
         [Authorize(Roles = "user")]
         [HttpPost]
         [Route("api/BL/ChangeRate")]
@@ -55,6 +59,8 @@ namespace ASPNetCoreWebAPI.Controllers
             }
         }
 
+
+        //пополение баланса 
         [Authorize(Roles = "user")]
         [HttpPost]
         [Route("api/BL/PayBalance")]

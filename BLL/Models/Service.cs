@@ -7,6 +7,7 @@ using DAL.Entity;
 
 namespace BLL
 {
+    //модель услуги
     public class Service
     {
         DAL.Entity.Service service = new DAL.Entity.Service();
@@ -19,7 +20,6 @@ namespace BLL
 
         public string Condition { get; set; }
         public Service() { }
-        //public List<int> ClientIds { get; set; }
 
         public Service(int id)
         {

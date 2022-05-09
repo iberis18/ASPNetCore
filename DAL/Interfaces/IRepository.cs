@@ -10,7 +10,7 @@ namespace DAL.Interfaces
     {
         List<T> GetList(); // получить все элементы таблицы
         T GetItem(int id); // получить элемент таблицы по id
-        T GetCurrentItem(string name); // получить элемент таблицы по Имени
+        T GetCurrentItem(string name); // получить элемент таблицы по имени
         void Create(T item); // добавить элемент в таблицу
         void Update(T item); // обновить элемент в таблице
         void Delete(int id); // удалить элемент из таблицы

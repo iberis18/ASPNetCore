@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Entity
 {
+    //сущность тариф
     public class Rate
     {
         public Rate()

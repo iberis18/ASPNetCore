@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace DAL.Entity
 {
+
     public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<MobileOperatorContext>
     {
         public MobileOperatorContext CreateDbContext(string[] args)

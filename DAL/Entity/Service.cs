@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Entity
 {
+    //сущность услуга
     public class Service
     {
         public Service()

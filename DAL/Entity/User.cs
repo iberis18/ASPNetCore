@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace DAL.Entity
 {
+    //пользователь 
     public class User : IdentityUser
     {
-
 
     }
 }

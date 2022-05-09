@@ -1,6 +1,8 @@
 ﻿import React, { Component } from 'react';
 import { extend } from 'jquery';
 
+//страница тарифов в архиве 
+
 
 export class RatesInArchive extends Component {
     static displayName = RatesInArchive.name;
@@ -17,6 +19,7 @@ export class RatesInArchive extends Component {
         this.loadData();
     }
 
+    //загрузка списка архивных тарифов 
     loadData() {
         var url = "/api/rates/archive";
         var xhr = new XMLHttpRequest();
@@ -28,7 +31,9 @@ export class RatesInArchive extends Component {
         xhr.send();
     }
 
+    //отображение 
     render() {
+        //если такие тарифы есть
         if (this.state.rates.length != 0)
             return (
                 <div>
@@ -36,6 +41,7 @@ export class RatesInArchive extends Component {
                     <p></p>
                     <div>
                         {
+                            //для каждого элемента из списка 
                             this.state.rates.map((rate) => {
                                 return <Rate rate={rate} loadData={this.loadData} />
                             })
@@ -44,6 +50,7 @@ export class RatesInArchive extends Component {
                 </div>
             );
         else
+            //если тарифов нет
             return (
                 <div>
                     <h2>Архивные тарифы:</h2>
@@ -54,6 +61,8 @@ export class RatesInArchive extends Component {
     }
 }
 
+
+//один тариф из списка 
 class Rate extends Component {
 
     constructor(props) {
@@ -75,12 +84,14 @@ class Rate extends Component {
         };
     }
 
+    //возврат тарифа в активные 
     TurnOnRate() {
         this.setState({ status: true }, () => {
             this.EditRate()
         });
     }
 
+    //изменеие тарифа 
     EditRate() {
         var url = "/api/Rates/" + this.state.id;
         var xhr = new XMLHttpRequest();
@@ -107,6 +118,8 @@ class Rate extends Component {
         }));
     }
 
+
+    //отображение 
     render() {
         return (
                 <div>

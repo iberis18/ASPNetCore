@@ -11,6 +11,8 @@ namespace ASPNetCoreWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
+    //получение истории платежей 
     public class GetPayHistoryController : ControllerBase
     {
         PayHistoryOperation DB;
@@ -26,10 +28,11 @@ namespace ASPNetCoreWebAPI.Controllers
             logger = loggerFactory.CreateLogger<GetPayHistoryController>();
         }
 
-        [Authorize(Roles = "user")]
 
+        //полученеие истории пополнений и списаний  
+        [Authorize(Roles = "user")]
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetCurrentClient([FromRoute] int id)
+        public async Task<IActionResult> GetPayHistory([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {

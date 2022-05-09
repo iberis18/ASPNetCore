@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Entity
 {
+    //сущность звонок
     public class Call
     {
         public int Id { get; set; }

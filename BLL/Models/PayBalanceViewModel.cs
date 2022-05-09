@@ -8,6 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BLL.Models
 {
+    //модель для пополнения баланса
     public class PayBalanceViewModel
     {
         [Required]

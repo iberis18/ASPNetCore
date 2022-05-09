@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ASPNetCoreWebAPI.Controllers
 {
+
+    //контроллер тарифов 
     [Route("api/[controller]")]
     [ApiController]
     public class RatesController : ControllerBase
@@ -31,12 +33,16 @@ namespace ASPNetCoreWebAPI.Controllers
             logger = loggerFactory.CreateLogger<RatesController>();
         }
 
+
+        //получение списка всех тарифов 
         [HttpGet]
         public IEnumerable<BLL.Rate> GetAll()
         {
             return DB.GetAllRates();
         }
 
+
+        //получение тарифа по ID 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRate([FromRoute] int id)
         {
@@ -55,6 +61,8 @@ namespace ASPNetCoreWebAPI.Controllers
             return Ok(rate);
         }
 
+
+        //создание тарифа 
         [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] BLL.Rate rate)
@@ -69,12 +77,17 @@ namespace ASPNetCoreWebAPI.Controllers
             return CreatedAtAction("GetRate", new { id = rate.Id }, rate);
         }
 
+
+        //получение архивных тарифов 
+        [Authorize(Roles = "admin")]
         [HttpGet("archive")]
         public IEnumerable<BLL.Rate> GetAllArchive()
         {
             return archiveRateOperation.GetAll();
         }
 
+
+        //обновление тарифа
         [Authorize(Roles = "admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] BLL.Rate rate)

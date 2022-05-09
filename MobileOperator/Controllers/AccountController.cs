@@ -11,6 +11,8 @@ using Microsoft.Extensions.Logging;
 
 namespace MobileOperator.Controllers
 {
+
+    //контроллер аккаунов
     [Produces("application/json")]
     public class AccountController : Controller
     {
@@ -30,6 +32,7 @@ namespace MobileOperator.Controllers
             logger = loggerFactory.CreateLogger<AccountController>();
         }
 
+        //регистрация 
         [HttpPost]
         [Route("api/Account/Register")]
         public async Task<IActionResult> Register([FromBody] RegisterViewModel model)
@@ -80,6 +83,7 @@ namespace MobileOperator.Controllers
         }
 
 
+        //вход 
         [HttpPost]
         [Route("api/Account/Login")]
         public async Task<IActionResult> Login([FromBody] LoginViewModel model)
@@ -133,6 +137,8 @@ namespace MobileOperator.Controllers
             }
         }
 
+
+        //выход 
         [HttpPost]
         [Route("api/Account/LogOff")]
         public async Task<IActionResult> LogOff()
@@ -151,6 +157,7 @@ namespace MobileOperator.Controllers
         }
 
 
+        //проверка пользователя 
         [HttpPost]
         [Route("api/Account/isAuthenticated")]
         public async Task<IActionResult> LogisAuthenticatedOff()

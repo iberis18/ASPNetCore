@@ -8,6 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BLL.Models
 {
+    //Модель для смены тарифа
     public class ChangeRateViewModel
     {
         [Required]

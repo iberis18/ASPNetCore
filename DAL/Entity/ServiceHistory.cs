@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Entity
 {
+    //сущность история подключения услуг 
     public class ServiceHistory
     {
         public int Id { get; set; }

@@ -7,6 +7,7 @@ using DAL.Entity;
 
 namespace BLL
 {
+    //модель сущности клиент
     public class Client
     {
         DAL.Entity.Client client = new DAL.Entity.Client();

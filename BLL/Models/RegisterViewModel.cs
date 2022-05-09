@@ -8,6 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BLL.Models
 {
+    //модель регистрации в системе
     public class RegisterViewModel
     {
         [Required]

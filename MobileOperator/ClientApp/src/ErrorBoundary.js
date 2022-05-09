@@ -1,7 +1,8 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
 
-class ErrorBoundary extends React.Component { // реализация Error Boundary
+// реализация Error Boundary
+class ErrorBoundary extends React.Component { 
     constructor(props) {
         super(props);
         this.state = { error: "" };

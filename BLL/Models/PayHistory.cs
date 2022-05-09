@@ -7,6 +7,7 @@ using DAL.Entity;
 
 namespace BLL
 {
+    //модель сущности история платежей
     public class PayHistory
     {
         DAL.Entity.PayHistory pay = new DAL.Entity.PayHistory();

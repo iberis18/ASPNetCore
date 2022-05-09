@@ -11,9 +11,10 @@ using Microsoft.Extensions.Logging;
 
 namespace BLL.Operations
 {
+    //оперции связанные с историей пополнений
     public class PayHistoryOperation
     {
-        IDbRepos db;
+        IDbRepos db; //репозиторий
         ILogger logger; // логгер
 
         public PayHistoryOperation(IDbRepos repos)
@@ -22,6 +23,7 @@ namespace BLL.Operations
         }
         public PayHistoryOperation()
         {
+            //логгирование
             var loggerFactory = LoggerFactory.Create(builder =>
             {
                 builder.AddConsole();
@@ -30,18 +32,22 @@ namespace BLL.Operations
             logger = loggerFactory.CreateLogger<DBDataOperation>();
             try
             {
-                db = new DBRepository();
+                db = new DBRepository(); //создание репозитория
             }
             catch
             {
                 logger.LogError("Ошибка подключения к базе данных");
             }
         }
+
+        //получение истории пополнеий и списаний для клиента 
         public List<PayHistory> GetPayHistory(int clientId)
         {
             try
             {
+                //получение клиента по ID
                 Client client = new Client(db.Clients.GetItem(clientId));
+                //создание списка пополнений и списаний
                 List<PayHistory> list = new List<PayHistory>();
                 list = db.PayHistorys.GetList().Select(i => new PayHistory(i)).ToList();
                 foreach (PayHistory i in list)
@@ -49,6 +55,7 @@ namespace BLL.Operations
                     if (i.ClientId != clientId)
                         list.Remove(i);
                 }
+                //переворот списка для того, чтобы последние записи оказались вначале 
                 list.Reverse();
                 return list;
             }

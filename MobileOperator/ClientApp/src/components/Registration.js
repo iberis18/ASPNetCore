@@ -6,7 +6,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Tooltip, Button } from "reactstrap"
 import { useHistory } from "react-router-dom";
 
+//старница регистрации
 
+
+//переход на страницу входа 
 const LoginPage = () => {
     let history = useHistory();
 
@@ -18,6 +21,8 @@ const LoginPage = () => {
     );
 };
 
+
+//окно регистрации
 export class Registration extends Component {
     static displayName = Registration.name;
 
@@ -35,6 +40,7 @@ export class Registration extends Component {
         this.onPasswordConfirmChange = this.onPasswordConfirmChange.bind(this);
     }
 
+    //функции прии изменеие полей формы 
     onNumberChange(e) {
         this.setState({ number: e.target.value });
     }
@@ -45,6 +51,8 @@ export class Registration extends Component {
         this.setState({ passwordConfirm: e.target.value });
     }
 
+
+    //регистрация 
     Registr() {
         var url = "/api/Account/Register";
         var xhr = new XMLHttpRequest();
@@ -64,6 +72,8 @@ export class Registration extends Component {
         xhr.send(JSON.stringify({ number: this.state.number.trim(), password: this.state.password.trim(), passwordConfirm: this.state.passwordConfirm.trim() }));
     }
 
+    //проверка возможности регистарции
+    //(пользователь должен быть клиентом данного оператора)
     CheckClient() {
         var url = "/api/Clients/" + this.state.number.trim();
         var xhr = new XMLHttpRequest();
@@ -80,9 +90,7 @@ export class Registration extends Component {
         xhr.send();
     }
 
-
-
-    // добавление объекта
+    //отправка формы 
     onSubmit(e) {
         e.preventDefault();
         var clientNumber = this.state.number.trim();
@@ -97,6 +105,7 @@ export class Registration extends Component {
     }
 
 
+    //отображение 
     render() {
         return (
             <div>

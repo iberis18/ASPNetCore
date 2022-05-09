@@ -7,6 +7,7 @@ using DAL.Entity;
 
 namespace BLL
 {
+    //модель тарифа
     public class Rate
     {
         DAL.Entity.Rate rate = new DAL.Entity.Rate();

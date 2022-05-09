@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BLL.Models
 {
+    //модель для авторизации
     public class LoginViewModel
     {
         [Required]

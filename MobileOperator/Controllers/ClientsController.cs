@@ -10,6 +10,8 @@ using Microsoft.Extensions.Logging;
 
 namespace ASPNetCoreWebAPI.Controllers
 {
+
+    //контроллер клиентов 
     [Route("api/[controller]")]
     [ApiController]
     public class ClientsController : ControllerBase
@@ -27,6 +29,8 @@ namespace ASPNetCoreWebAPI.Controllers
             logger = loggerFactory.CreateLogger<ClientsController>();
         }
 
+
+        //получение всех клиентов 
         [Authorize(Roles = "admin")]
         [HttpGet]
         public IEnumerable<BLL.Client> GetAll()
@@ -35,6 +39,7 @@ namespace ASPNetCoreWebAPI.Controllers
         }
 
 
+        //получение клиента по номеру 
         [Authorize(Roles = "user")]
         [HttpGet("{number}")]
         public async Task<IActionResult> GetCurrentClient([FromRoute] string number)
@@ -55,6 +60,7 @@ namespace ASPNetCoreWebAPI.Controllers
         }
 
 
+        //создание клиента 
         [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] BLL.Client client)
@@ -70,6 +76,8 @@ namespace ASPNetCoreWebAPI.Controllers
             return CreatedAtAction("GetClient", new { id = client.Id }, client);
         }
 
+
+        //обновление клиента 
         [Authorize(Roles = "admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] BLL.Client client)
@@ -85,6 +93,7 @@ namespace ASPNetCoreWebAPI.Controllers
         }
 
 
+        //удаление клиента 
         [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)

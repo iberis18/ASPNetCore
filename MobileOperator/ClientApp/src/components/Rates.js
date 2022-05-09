@@ -5,7 +5,9 @@ import './custom.css'
 import { useHistory } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+//странца тарифов 
 
+//список тарифов 
 export class Rates extends Component {
     static displayName = Rates.name;
 
@@ -29,6 +31,7 @@ export class Rates extends Component {
         this.CheckRole();
     }
 
+    //загрузка списка тарифов
     loadData() {
         this.setState({ rates: [] });
         var url = "/api/rates";
@@ -41,6 +44,7 @@ export class Rates extends Component {
         xhr.send();
     }
 
+    //проверка пользователя 
     CheckRole() {
         var url = "/api/Account/isAuthenticated";
         var xhr = new XMLHttpRequest();
@@ -56,6 +60,7 @@ export class Rates extends Component {
         xhr.send();
     }
 
+    //получение информации о пользователе 
     GetUser() {
         var url = "/api/Clients/" + this.state.number;
         var xhr = new XMLHttpRequest();
@@ -67,6 +72,7 @@ export class Rates extends Component {
         xhr.send();
     }
 
+    //получение тарифа пользователя 
     GetRate() {
         var url = "/api/Rates/" + this.state.client.rateId;
         var xhr = new XMLHttpRequest();
@@ -78,8 +84,12 @@ export class Rates extends Component {
         xhr.send();
     }
 
+
+    //отображение 
     render() {
+        //если тарифы найдены 
         if (this.state.rates.length !== 0) {
+            //страница для админа 
             if (this.state.role === "admin")
                 return (
                     <div>
@@ -88,6 +98,7 @@ export class Rates extends Component {
                         <p></p><br />
                         <div>
                             {
+                                //для всех элементов из списка 
                                 this.state.rates.map((rate) => {
                                     return <Rate rate={rate} client={this.state.client} role={this.state.role} loadData={this.loadData} GetUser={this.GetUser} />
                                 })
@@ -95,6 +106,7 @@ export class Rates extends Component {
                         </div>
                     </div>
                 );
+            //страница для пользователей и гостей 
             else
                 return (
                     <div>
@@ -102,6 +114,7 @@ export class Rates extends Component {
                         <p></p>
                         <div>
                             {
+                                //для всех элементов из списка 
                                 this.state.rates.map((rate) => {
                                     return <Rate rate={rate} client={this.state.client} role={this.state.role} loadData={this.loadData} GetUser={this.GetUser} />
                                 })
@@ -111,6 +124,7 @@ export class Rates extends Component {
                 );
         }
         else
+            //если тарифы не найдены
             return (
                 <div>
                     <h2>Тарифы:</h2>
@@ -121,6 +135,7 @@ export class Rates extends Component {
     }
 }
 
+//один тариф из списка
 class Rate extends Component {
 
     constructor(props) {
@@ -145,7 +160,6 @@ class Rate extends Component {
         this.onNameChange = this.onNameChange.bind(this);
         this.onCostChange = this.onCostChange.bind(this);
         this.onMinutesChange = this.onMinutesChange.bind(this);
-        //this.onCityCostChange = this.onCityCostChange.bind(this);
         this.onIntercityCostChange = this.onIntercityCostChange.bind(this);
         this.onInternationalCostChange = this.onInternationalCostChange.bind(this);
         this.onGBChange = this.onGBChange.bind(this);
@@ -158,6 +172,7 @@ class Rate extends Component {
         this.ChangeRate = this.ChangeRate.bind(this);
     }
 
+    //функции для изменеия полей формы 
     onNameChange(e) {
         this.setState({ name: e.target.value });
     }
@@ -189,6 +204,7 @@ class Rate extends Component {
         this.setState({ smsCost: e.target.value });
     }
 
+    //изменеие тарифа
     ChangeRate() {
         var url = "/api/BL/ChangeRate";
         var xhr = new XMLHttpRequest();
@@ -209,12 +225,14 @@ class Rate extends Component {
         xhr.send(JSON.stringify({ ClientId: this.state.client.id, RateId: this.state.id }));
     }
 
+    //отпрвка тарифа в архив 
     TurnOffRate() {
         this.setState({ status: false }, () => {
             this.EditRate()
         });
     }
 
+    //изменеие тарифа 
     EditRate() {
         var url = "/api/Rates/" + this.state.id;
         var xhr = new XMLHttpRequest();
@@ -244,7 +262,9 @@ class Rate extends Component {
         }));
     }
 
+    //отображение 
     render() {
+        //для пользователя 
         if (this.state.role == "user")
             return (
                 <div>
@@ -299,6 +319,7 @@ class Rate extends Component {
                     <hr />
                 </div>
             );
+        //для гостя 
         if (this.state.role == "")
             return (
                 <div>
@@ -348,6 +369,7 @@ class Rate extends Component {
                     </div>
                 </div>
             );
+        //для админа 
         if (this.state.role == "admin")
             return (
                 <div>
@@ -444,7 +466,7 @@ class Rate extends Component {
     }
 }
 
-
+//кнопка подключения тарифа для клиента
 class CurrentButton extends Component {
 
     constructor(props) {
@@ -457,6 +479,7 @@ class CurrentButton extends Component {
         this.OnClick = this.OnClick.bind(this);
     }
 
+    //отображение кнопки в зависимости от уже подключенного тарифа 
     componentDidMount() {
         if (this.state.rateId == this.state.clientsRate)
             this.setState({ show: <button type="button" className="btn btn-info" disabled>Тариф подключен</button> });
@@ -465,6 +488,7 @@ class CurrentButton extends Component {
     }
 
     OnClick() {
+        //вызов функции смены тарифа 
         this.props.ChangeRate();
     }
 
@@ -473,6 +497,7 @@ class CurrentButton extends Component {
     }
 }
 
+//форма добавления тарифа у админа 
 class AddRate extends Component {
     constructor(props) {
         super(props);
@@ -492,7 +517,6 @@ class AddRate extends Component {
         };
         this.onNameChange = this.onNameChange.bind(this);
         this.onCostChange = this.onCostChange.bind(this);
-        //this.onCityCostChange = this.onCityCostChange.bind(this);
         this.onIntercityCostChange = this.onIntercityCostChange.bind(this);
         this.onInternationalCostChange = this.onInternationalCostChange.bind(this);
         this.onGBChange = this.onGBChange.bind(this);
@@ -502,15 +526,13 @@ class AddRate extends Component {
         this.onMinuteCostChange = this.onMinuteCostChange.bind(this);
         this.onSMSCostChange = this.onSMSCostChange.bind(this);
     }
+    //функции вызываемые при изменеие полей формы 
     onNameChange(e) {
         this.setState({ name: e.target.value });
     }
     onCostChange(e) {
         this.setState({ cost: e.target.value });
     }
-    //onCityCostChange(e) {
-    //    this.setState({ cityCost: e.target.value });
-    //}
     onIntercityCostChange(e) {
         this.setState({ intercityCost: e.target.value });
     }
@@ -536,6 +558,7 @@ class AddRate extends Component {
         this.setState({ smsCost: e.target.value });
     }
 
+    //создание тарифа 
     CreateRate() {
         var xhr = new XMLHttpRequest();
         var url = "/api/rates";
@@ -560,6 +583,7 @@ class AddRate extends Component {
         }));
     }
 
+    //отображениие 
     render() {
         return (
             <div className="shadowForm shadow-lg bg-white col-sm-9" >

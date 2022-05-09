@@ -1,4 +1,3 @@
-
 import 'bootstrap/dist/css/bootstrap.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -11,9 +10,12 @@ import ErrorBoundary from './ErrorBoundary';
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
 const rootElement = document.getElementById('root');
 
+//стартовая страница
 ReactDOM.render(
     <BrowserRouter basename={baseUrl}>
-        <ErrorBoundary> {/*обработка исключений*/}
+        {/*обработка исключений*/}
+        <ErrorBoundary>
+            {/*приложение*/}
             <App />
         </ErrorBoundary> 
   </BrowserRouter>,

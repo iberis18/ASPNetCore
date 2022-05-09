@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { NavMenu } from './NavMenu';
 import './custom.css'
 
+
+//страница авторизации
 export class Login extends Component {
     static displayName = Login.name;
 
@@ -19,6 +21,7 @@ export class Login extends Component {
         this.onPasswordChange = this.onPasswordChange.bind(this);
     }
 
+    //изменяем поля формы 
     onNumberChange(e) {
         this.setState({ number: e.target.value });
     }
@@ -54,6 +57,7 @@ export class Login extends Component {
             alert("Заполните все поля!");
     }
 
+    //отображение 
     render() {
         return (
             <div>
@@ -90,6 +94,8 @@ export class Login extends Component {
     }
 }
 
+
+//проверка входа 
 class CheckAuth extends Component {
 
     constructor(props) {

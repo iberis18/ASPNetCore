@@ -7,26 +7,23 @@ using Microsoft.Extensions.Logging;
 
 namespace BLL.Operations
 {
+    //оперция архивации тарифа
     public class ArchiveRateOperation
     {
-        IDbRepos db;
+        IDbRepos db; //репозиторий
         ILogger logger; // логгер
-
-        public ArchiveRateOperation(IDbRepos repos)
-        {
-            db = repos;
-        }
 
         public ArchiveRateOperation()
         {
+            //логгирование
             var loggerFactory = LoggerFactory.Create(builder =>
             {
                 builder.AddConsole();
             });
-
             logger = loggerFactory.CreateLogger<DBDataOperation>();
             try
             {
+                //созание репозитория бд
                 db = new DBRepository();
             }
             catch
@@ -35,6 +32,7 @@ namespace BLL.Operations
             }
         }
 
+        //получение всех действующих (не архивных) тарифов
         public List<Rate> GetAll()
         {
             try

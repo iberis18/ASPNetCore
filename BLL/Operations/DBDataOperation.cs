@@ -8,9 +8,10 @@ using Microsoft.Extensions.Logging;
 
 namespace BLL
 {
+    //CRUD оперции с БД
     public class DBDataOperation : IDbCrud
     {
-        IDbRepos db;
+        IDbRepos db; //репозиторий
         ILogger logger; // логгер
 
         public DBDataOperation(IDbRepos repos)
@@ -19,6 +20,7 @@ namespace BLL
         }
         public DBDataOperation()
         {
+            //логгирование
             var loggerFactory = LoggerFactory.Create(builder =>
             {
                 builder.AddConsole();
@@ -27,7 +29,7 @@ namespace BLL
             logger = loggerFactory.CreateLogger<DBDataOperation>();
             try
             {
-                db = new DBRepository();
+                db = new DBRepository(); //создание репозитория
             }
             catch
             {
@@ -35,7 +37,10 @@ namespace BLL
             }            
         }
 
-        ///////////клиент
+
+        //////////////////////оперции связанные с клиентом
+        //
+        //получение всех клиентов
         public List<Client> GetAllClients()
         {
             try
@@ -48,6 +53,7 @@ namespace BLL
                 return null;
             }
         }
+        //получение клиента оп id 
         public Client GetClient(int Id)
         {
             try
@@ -60,6 +66,7 @@ namespace BLL
                 return null;
             }
         }
+        //получение клиента по имени 
         public Client GetCurrentClient(string number)
         {
             try
@@ -72,6 +79,8 @@ namespace BLL
                 return null;
             }
         }
+        
+        //удаление клиента 
         public void DeleteClient(int id)
         {
             try
@@ -88,6 +97,7 @@ namespace BLL
             }
         }
 
+        //создание нового клиента
         public void CreateClient(Client c)
         {
             try
@@ -111,6 +121,7 @@ namespace BLL
             }
         }
 
+        //обновление клиента
         public void UpdateClient(Client c, int id)
         {
             try
@@ -133,7 +144,9 @@ namespace BLL
             }
         } 
 
-        ///////////тариф
+        //////////////////////оперции, связанные с тарифом
+        //
+        //Получить все активные (не в архиве) тарифы 
         public List<Rate> GetAllRates()
         {
             try
@@ -154,6 +167,8 @@ namespace BLL
                 return null;
             }
         }
+
+        // получить тариф по ID
         public Rate GetRate(int Id)
         {
             try
@@ -167,6 +182,7 @@ namespace BLL
             }
         }
 
+        //удалить тариф
         public void DeleteRate(int id)
         {
             try
@@ -183,6 +199,8 @@ namespace BLL
             }
         }
 
+
+        //создать тариф
         public void CreateRate(Rate r)
         {
             try
@@ -211,6 +229,8 @@ namespace BLL
             }
         }
 
+
+        //обновить тариф
         public void UpdateRate(Rate r, int id)
         {
             try
@@ -237,6 +257,8 @@ namespace BLL
             }
         }
 
+
+        //создать историб пополнений/списаний
         public void CreatePayHistory(PayHistory r)
         {
             try

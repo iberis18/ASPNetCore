@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Entity
 {
+    //сущность смс
     public class SMS
     {
         public int Id { get; set; }
