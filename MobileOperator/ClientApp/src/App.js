@@ -17,7 +17,7 @@ export default class App extends Component {
   render () {
       return (
         <Layout>
-            //маршрутизация
+            {/*маршрутизация*/}
             <Route path='/clients' component={Clients} />
             <Route path='/rates' component={Rates} />
             <Route path='/ratesInArchive' component={RatesInArchive} />
