@@ -20,8 +20,6 @@ namespace ASPNetCoreWebAPI.Controllers
         ArchiveRateOperation archiveRateOperation;
         DBDataOperation DB;
         ILogger logger; // логгер
-
-
         public RatesController()
         {
             DB = new DBDataOperation();
@@ -32,7 +30,6 @@ namespace ASPNetCoreWebAPI.Controllers
             });
             logger = loggerFactory.CreateLogger<RatesController>();
         }
-
 
         //получение списка всех тарифов 
         [HttpGet]
@@ -97,7 +94,7 @@ namespace ASPNetCoreWebAPI.Controllers
                 return BadRequest(ModelState);
             }
             DB.UpdateRate(rate, id);
-            logger.LogInformation("Rate №" + id +" " + rate.Name + " edited by admin");
+            logger.LogInformation("Rate " + id +" " + rate.Name + " edited by admin");
 
             return NoContent();
         }

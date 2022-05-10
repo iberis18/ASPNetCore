@@ -79,13 +79,11 @@ export class Registration extends Component {
         var xhr = new XMLHttpRequest();
         xhr.open("get", url);
         xhr.onload = function () {
-            if (xhr.status === 200) {
                 var data = JSON.parse(xhr.responseText);
                 if (data.id != 0)
                     this.Registr();
                 else
                     alert("Неверный номер телефона! Данный номер не является клиентом нашего оператора");
-            }
         }.bind(this);
         xhr.send();
     }
@@ -121,7 +119,7 @@ export class Registration extends Component {
                                     <label className="control-label col-6">Номер телефона:</label>
                                     <input type="text"
                                         className="form-control col-6"
-                                        placeholder="Email"
+                                        placeholder="Номер телефона"
                                         value={this.state.number}
                                         onChange={this.onNumberChange} />
                                 </div>

@@ -56,6 +56,10 @@ namespace DAL.Repository
         public void Delete(int id)
         {
             Client item = db.Client.Find(id);
+            List<PayHistory> p = db.PayHistory.ToList();
+            foreach (PayHistory i in p)
+                if (i.ClientId == item.Id)
+                    db.PayHistory.Remove(i);
             if (item != null)
                 db.Client.Remove(item);
         }

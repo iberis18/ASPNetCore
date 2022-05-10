@@ -50,11 +50,11 @@ namespace BLL.Operations
                 //создание списка пополнений и списаний
                 List<PayHistory> list = new List<PayHistory>();
                 list = db.PayHistorys.GetList().Select(i => new PayHistory(i)).ToList();
-                foreach (PayHistory i in list)
-                {
-                    if (i.ClientId != clientId)
-                        list.Remove(i);
-                }
+                List<PayHistory> list2 = new List<PayHistory>();
+
+                for (int i = 0; i < list.Count; i++)
+                    if (list[i].ClientId == clientId)
+                        list2.Add(list[i]);
                 //переворот списка для того, чтобы последние записи оказались вначале 
                 list.Reverse();
                 return list;

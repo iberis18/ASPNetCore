@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Entity
 {
-    //тип звонка
+    //тип звонка и смс
     public class Type
     {
         public Type()

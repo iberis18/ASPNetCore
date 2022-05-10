@@ -4,6 +4,8 @@ import { extend } from 'jquery';
 import './custom.css'
 import { useHistory } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Alert } from 'reactstrap';
+
 
 //странца тарифов 
 
@@ -215,11 +217,10 @@ class Rate extends Component {
             if (xhr.responseText !== "") {
                 var data = JSON.parse(xhr.responseText);
                 alert(data.message);
-                return false;
             }
             else {
                 this.props.GetUser();
-                return true;
+                
             }
         }.bind(this);
         xhr.send(JSON.stringify({ ClientId: this.state.client.id, RateId: this.state.id }));
@@ -239,10 +240,9 @@ class Rate extends Component {
         xhr.open("put", url, true);
 
         xhr.setRequestHeader("Content-Type", "application/json;");
-        //xhr.onload = () => { this.props.loadData() };
-
         xhr.onload = function () {
             this.props.loadData();
+            //alert("Тариф успешно изменен!");
         }.bind(this);
 
         xhr.send(JSON.stringify({
@@ -576,7 +576,7 @@ class AddRate extends Component {
             internationalCost: this.state.internationalCost,
             gb: this.state.gb,
             sms: this.state.sms,
-            minutes: this.state.minuteCost,
+            minutes: this.state.minutes,
             gbCost: this.state.gbCost,
             minuteCost: this.state.minuteCost,
             smsCost: this.state.smsCost

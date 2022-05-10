@@ -28,9 +28,8 @@ namespace ASPNetCoreWebAPI.Controllers
             logger = loggerFactory.CreateLogger<GetPayHistoryController>();
         }
 
-
-        //полученеие истории пополнений и списаний  
         [Authorize(Roles = "user")]
+        //полученеие истории пополнений и списаний  
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPayHistory([FromRoute] int id)
         {
@@ -39,14 +38,14 @@ namespace ASPNetCoreWebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var client = DB.GetPayHistory(id);
+            var clients = DB.GetPayHistory(id);
 
-            if (client == null)
+            if (clients == null)
             {
                 return NotFound();
             }
 
-            return Ok(client);
+            return Ok(clients);
         }
 
     }

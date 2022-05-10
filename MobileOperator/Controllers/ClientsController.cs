@@ -31,7 +31,6 @@ namespace ASPNetCoreWebAPI.Controllers
 
 
         //получение всех клиентов 
-        [Authorize(Roles = "admin")]
         [HttpGet]
         public IEnumerable<BLL.Client> GetAll()
         {
@@ -40,7 +39,6 @@ namespace ASPNetCoreWebAPI.Controllers
 
 
         //получение клиента по номеру 
-        [Authorize(Roles = "user")]
         [HttpGet("{number}")]
         public async Task<IActionResult> GetCurrentClient([FromRoute] string number)
         {
@@ -59,9 +57,8 @@ namespace ASPNetCoreWebAPI.Controllers
             return Ok(client);
         }
 
-
-        //создание клиента 
         [Authorize(Roles = "admin")]
+        //создание клиента 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] BLL.Client client)
         {
@@ -77,8 +74,8 @@ namespace ASPNetCoreWebAPI.Controllers
         }
 
 
-        //обновление клиента 
         [Authorize(Roles = "admin")]
+        //обновление клиента 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] BLL.Client client)
         {
@@ -93,8 +90,8 @@ namespace ASPNetCoreWebAPI.Controllers
         }
 
 
-        //удаление клиента 
         [Authorize(Roles = "admin")]
+        //удаление клиента 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
@@ -103,7 +100,7 @@ namespace ASPNetCoreWebAPI.Controllers
                 return BadRequest(ModelState);
             }
             DB.DeleteClient(id);
-            logger.LogInformation("User № " + id + " deleted by admin");
+            logger.LogInformation("User " + id + " deleted by admin");
             return NoContent();
         }
     }

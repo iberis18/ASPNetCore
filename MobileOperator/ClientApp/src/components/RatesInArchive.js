@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { extend } from 'jquery';
+import { Button } from 'reactstrap';
 
 //страница тарифов в архиве 
 

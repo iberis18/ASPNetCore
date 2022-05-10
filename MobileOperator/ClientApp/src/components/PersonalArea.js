@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { useHistory } from "react-router-dom";
 import './custom.css'
+import { Button } from 'reactstrap';
 
 //страница личного кабинета
 

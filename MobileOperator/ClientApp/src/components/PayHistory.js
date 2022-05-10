@@ -72,7 +72,7 @@ export class PayHistory extends Component {
                 <br/>
                 {
                     //для каждого элемента из списка платежей
-                    this.state.payHistory.map((h) => {
+                    this.state.payHistory.map(function (h) {
                         return <History hist={h} />
                     })
                 }

@@ -47,8 +47,6 @@ namespace MobileOperator
             });
 
 
-
-
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
@@ -60,7 +58,6 @@ namespace MobileOperator
             });
 
 
-
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -68,7 +65,6 @@ namespace MobileOperator
             });
 
             services.AddControllersWithViews();
-
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -112,10 +108,6 @@ namespace MobileOperator
                 // To serve SwaggerUI at application's root page, set the RoutePrefix property to an empty string.
                 c.RoutePrefix = string.Empty;
             });
-
-
-
-
 
             app.UseEndpoints(endpoints =>
             {

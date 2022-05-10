@@ -202,6 +202,7 @@ class ClientsList extends React.Component {
     }
     // загрузка данных
     loadData() {
+        //this.setState({clients: [] })
         var xhr = new XMLHttpRequest();
         xhr.open("get", this.props.apiUrl, true);
         xhr.onload = function () {
@@ -265,6 +266,7 @@ class ClientsList extends React.Component {
             xhr.setRequestHeader("Content-Type", "application/json;");
             xhr.onload = function () {
                 this.loadData();
+                //alert("Клиент успешно изменен!")
             }.bind(this);
 
             xhr.send(JSON.stringify({

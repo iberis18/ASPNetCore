@@ -49,7 +49,7 @@ namespace ASPNetCoreWebAPI.Controllers
             string error = changeRate.ChangeRate(model.ClientId, model.RateId);
             if (error == "")
             {
-                logger.LogInformation("User № " + model.ClientId + "switched to rate № " + model.RateId);
+                logger.LogInformation("User " + model.ClientId + "switched to rate " + model.RateId);
                 return NoContent();
             }
             else
@@ -76,7 +76,7 @@ namespace ASPNetCoreWebAPI.Controllers
             string error = changeRate.PayBalance(model.Sum, model.ClientId);
             if (error == "")
             {
-                logger.LogInformation("User № " + model.ClientId + "topped up the balance by " + model.Sum + " rubles");
+                logger.LogInformation("User " + model.ClientId + "topped up the balance by " + model.Sum + " rubles");
                 return NoContent();
             }
             else
